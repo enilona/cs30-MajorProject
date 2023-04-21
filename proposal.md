@@ -2,7 +2,7 @@
 
 ## Project Description
 
-For my project I am going to be making a weather predictor that uses past data to predict the weather for the future. 
+For my project I am going to be making a weather predictor that uses past data to predict the weather for the future. The goal is to incorporate data reading features and figure out an algorithm to predict the weather. The end result will hopefully look like a webiste that shows 
 
 ## Need to Have List
 
@@ -14,6 +14,7 @@ For my project I am going to be making a weather predictor that uses past data t
 
 - The program incorporates some randomness to the weather prediction 
 - The final website looks nice 
-- Multiple locations can be chosen to show the weather
-- Can predict furthur into the future (10 days ahead type setup)
+- Weather report is shown in multiple locations (other cities, countries etc)
+- Can predict furthur into the future (10 days ahead?)
+-
 
