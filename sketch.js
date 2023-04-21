@@ -34,8 +34,9 @@ function setup() {
   //["Goat", "Leopard", "Zebra"]
 
   //cycle through the table
-  for (let r = 0; r < table.getRowCount(); r++)
-    for (let c = 0; c < table.getColumnCount(); c++) {
+  for (let r = 0; r < table.getRowCount(); r++) {
+    for (let c = 0; c < table.getColumnCount(); c++){
       print(table.getString(r, c));
     }
+  }
 }
