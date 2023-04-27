@@ -13,9 +13,6 @@ function preload() {
   //and has a header specifying the columns labels
   table1 = loadTable("saskatoon1980.csv", "csv", "header");
   table2 = loadTable("saskatoon1981.csv", "csv", "header");
-  //the file can be remote
-  //table = loadTable("http://p5js.org/reference/assets/mammals.csv",
-  //                  "csv", "header");
 }
 
 function setup() {
@@ -32,4 +29,16 @@ function setup() {
       print(table1.getString(r, c));
     }
   }
+}
+
+
+function takeAverage(){
+  let maxTemp = [];
+  for (let i = 0; i < table1.getRowCount(); i++) {
+    for (let j = 0; j < table1.getColumnCount(); j++){
+      print(table1.getString(i, j));
+    }
+  }
+  maxTemp.push(table1.getColumn("Max Temp (°C)"));
+
 }
