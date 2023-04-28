@@ -7,6 +7,9 @@
 
 
 let table1,table2;
+let anotherTemp = [];
+let aTemp = [];
+let maxTemp = [[]];
 
 function preload() {
   //my table is comma separated value "csv"
@@ -29,16 +32,19 @@ function setup() {
       print(table1.getString(r, c));
     }
   }
+  getAverage();
 }
 
 
-function takeAverage(){
-  let maxTemp = [];
+function getAverage(){
+  aTemp = table1.getColumn("Max Temp (°C)");
+  anotherTemp = table2.getColumn("Max Temp (°C)"); 
   for (let i = 0; i < table1.getRowCount(); i++) {
-    for (let j = 0; j < table1.getColumnCount(); j++){
-      print(table1.getString(i, j));
-    }
+    let temporaryList = [];
+    temporaryList.push(aTemp[i]);
+    temporaryList.push(anotherTemp[i]);
+    maxTemp.push(temporaryList);
   }
-  maxTemp.push(table1.getColumn("Max Temp (°C)"));
-
+  
+  return maxTemp;
 }
