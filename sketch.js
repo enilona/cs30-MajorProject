@@ -6,28 +6,22 @@
 
 
 
-let table,table1,table2,table3,table4,table5,table6,table7,table8,table9,table10;
+let table,table1;
 let anotherTemp = [];
-let aTemp = [];
 let maxTemp = [[]];
 let filesList = [];
+let list;
 
 function preload() {
-  let i = 1990;
-  table = `saskatoon${i}.csv`;
-  table1 = loadTable(table, "csv", "header");
-  // table1 = loadTable("saskatoon1990.csv", "csv", "header");
 
   //my table is comma separated value "csv"
   //and has a header specifying the columns labels
-  // for (let i = 1980; i <= 1990; i++){
-  //   table = `"saskatoon${i}.csv", "csv", "header"`;
-  //   table1 = loadTable(table);
-  //   filesList.push(table);
-  // }
-  // table1 = loadTable("saskatoon1980.csv", "csv", "header");
-  // table2 = loadTable("saskatoon1981.csv", "csv", "header");
-  // table2 = loadTable("saskatoon1982.csv", "csv", "header");
+  for (let i = 1980; i <= 1990; i++){
+    table = `saskatoon${i}.csv`;
+    table = loadTable(table, "csv", "header");
+    filesList.push(table);
+  }
+  //table1 = loadTable("saskatoon1980.csv", "csv", "header");
 
 }
 
@@ -45,19 +39,23 @@ function setup() {
       print(table1.getString(r, c));
     }
   }
-  getAverage();
+ getMax();
 }
 
 
-function getAverage(){
-  aTemp = table1.getColumn("Max Temp (°C)");
-  anotherTemp = table2.getColumn("Max Temp (°C)"); 
-  for (let i = 0; i < table1.getRowCount(); i++) {
-    let temporaryList = [];
-    temporaryList.push(aTemp[i]);
-    temporaryList.push(anotherTemp[i]);
-    maxTemp.push(temporaryList);
+function getMax(){
+  let aTemp =[];
+  aTemp.push(filesList[0].getColumn("Max Temp (°C)"));
+
+  for (let i = 0; i < filesList.length; i++) {
+
+    // for (let j = 0; j < aTemp.length; j++){
+    //   let temporaryList = [];
+    //   temporaryList.push(aTemp[i]);
+    //   maxTemp.push(temporaryList);
+    // }
   }
   
-  return maxTemp;
+  //return maxTemp
+  return aTemp;
 }
