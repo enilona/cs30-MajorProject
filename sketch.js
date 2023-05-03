@@ -8,7 +8,8 @@
 
 let table,table1;
 let anotherTemp = [];
-let maxTemp = [[]];
+let maxTemp = [];
+let minTemp=[[]];
 let filesList = [];
 let list;
 
@@ -39,23 +40,38 @@ function setup() {
       print(table1.getString(r, c));
     }
   }
- getMax();
+  getMax();
 }
 
 
 function getMax(){
-  let aTemp =[];
-  aTemp.push(filesList[0].getColumn("Max Temp (°C)"));
-
-  for (let i = 0; i < filesList.length; i++) {
-
-    // for (let j = 0; j < aTemp.length; j++){
-    //   let temporaryList = [];
-    //   temporaryList.push(aTemp[i]);
-    //   maxTemp.push(temporaryList);
-    // }
+  let temporaryList = [];
+  for (let i = 0; i < 366; i++){
+    let temporaryList = [];
+    for (let j = 0; j < filesList.length; j++) {
+      let aTemp =[];
+      aTemp.push(filesList[j].getColumn("Max Temp (°C)"));
+      temporaryList.push(aTemp[i]);
+    }
+    maxTemp.push(temporaryList);
   }
-  
-  //return maxTemp
-  return aTemp;
+
+  //return maxTemp;
+  return temporaryList;
+}
+
+function getMin(){
+
+  for (let i = 0; i < 366; i++){
+    let temporaryList = [];
+    for (let j = 0; j < filesList.length; j++) {
+      let aTemp =[];
+      aTemp.push(filesList[j].getColumn("Max Temp (°C)"));
+      temporaryList.push(aTemp[i]);
+    }
+    maxTemp.push(temporaryList);
+  }
+
+  return minTemp;
+  //return aTemp;
 }
