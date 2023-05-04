@@ -2,13 +2,14 @@
 // Eszter Nemeth
 // Date
 //https://www.dataquest.io/blog/basic-statistics-in-python-probability/
+//download moment.js
 
 
 
 
 let table,table1;
 let anotherTemp = [];
-let maxTemp = [];
+let maxTemp = [[]];
 let minTemp=[[]];
 let filesList = [];
 let list;
@@ -41,37 +42,52 @@ function setup() {
     }
   }
   getMax();
+  getMin();
+  getAverage();
+}
+
+
+
+function getAverage(day){
+  let average = 0;
+  if (day === "today"){
+    day = 124;
+  }
+  let list = getMax();
+
+  for (let i = 0; i < filesList.length; i++){
+    average += Number(list[day][i]);
+  }
+  average = average/filesList.length;
+
+  return average;
 }
 
 
 function getMax(){
-  let temporaryList = [];
   for (let i = 0; i < 366; i++){
     let temporaryList = [];
     for (let j = 0; j < filesList.length; j++) {
-      let aTemp =[];
-      aTemp.push(filesList[j].getColumn("Max Temp (°C)"));
+      let aTemp = filesList[j].getColumn("Max Temp (°C)");
       temporaryList.push(aTemp[i]);
     }
     maxTemp.push(temporaryList);
   }
 
-  //return maxTemp;
-  return temporaryList;
+  return maxTemp;
 }
 
 function getMin(){
-
   for (let i = 0; i < 366; i++){
     let temporaryList = [];
     for (let j = 0; j < filesList.length; j++) {
-      let aTemp =[];
-      aTemp.push(filesList[j].getColumn("Max Temp (°C)"));
+      let aTemp = filesList[j].getColumn("Min Temp (°C)");
       temporaryList.push(aTemp[i]);
     }
-    maxTemp.push(temporaryList);
+    minTemp.push(temporaryList);
   }
 
   return minTemp;
-  //return aTemp;
+
 }
+
