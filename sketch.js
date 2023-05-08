@@ -18,7 +18,7 @@ function preload() {
 
   //my table is comma separated value "csv"
   //and has a header specifying the columns labels
-  for (let i = 1980; i <= 1990; i++){
+  for (let i = 1980; i <= 2011; i++){
     table = `saskatoon${i}.csv`;
     table = loadTable(table, "csv", "header");
     filesList.push(table);
@@ -44,17 +44,38 @@ function setup() {
   getMax();
   getMin();
   getAverage();
+  getHighest();
 }
 
+function draw(){
+  getHighest();
+}
 
+function getHighest(){
+  let highest = 0;
+  list = getMax();
+  for (let i = 1; i < list.length; i++){
+    for (let j = 1; j < 32; j++){
+      circle(i,list[i][j],10);
+      if (list[i][j] > highest){
+        highest = list[i][j];
+      }
+    }
+  }
+  return highest;
+}
 
-function getAverage(day){
+function getAverage(day, maxOrmin){
   let average = 0;
   if (day === "today"){
-    day = 124;
+    day = 127;
   }
-  let list = getMax();
-
+  if (maxOrmin === "max"){
+    list = getMax();
+  }
+  if (maxOrmin === "min"){
+    list = getMin();
+  }
   for (let i = 0; i < filesList.length; i++){
     average += Number(list[day][i]);
   }
