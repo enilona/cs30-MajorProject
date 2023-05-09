@@ -56,13 +56,13 @@ function getHighest(){
   list = getMax();
   for (let i = 1; i < list.length; i++){
     for (let j = 1; j < 32; j++){
-      circle(i,list[i][j],10);
       if (list[i][j] > highest){
         highest = list[i][j];
       }
     }
   }
   return highest;
+  //return list;
 }
 
 function getAverage(day, maxOrmin){
