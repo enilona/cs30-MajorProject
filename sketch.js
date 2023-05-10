@@ -28,27 +28,41 @@ function preload() {
 }
 
 function setup() {
+  createCanvas(windowWidth, windowHeight);
   //count the columns
-  print(table1.getRowCount() + " total rows in table");
-  print(table1.getColumnCount() + " total columns in table");
+  //print(table1.getRowCount() + " total rows in table");
+  //print(table1.getColumnCount() + " total columns in table");
 
-  print(table1.getColumn("Max Temp (°C)"));
+  //print(table1.getColumn("Max Temp (°C)"));
 
 
   //cycle through the table
-  for (let r = 0; r < table1.getRowCount(); r++) {
-    for (let c = 0; c < table1.getColumnCount(); c++){
-      print(table1.getString(r, c));
-    }
-  }
+  // for (let r = 0; r < table1.getRowCount(); r++) {
+  //   for (let c = 0; c < table1.getColumnCount(); c++){
+  //     print(table1.getString(r, c));
+  //   }
+  // }
   getMax();
   getMin();
-  getAverage();
+  getAverage(127,"max");
   getHighest();
 }
 
 function draw(){
-  getHighest();
+  background(220);
+  visualizeData();
+}
+
+function visualizeData() {
+  list = getMax();
+  fill("red");
+  let x = 0;
+  for (let i = 1; i < list.length; i++){
+    for (let j = 1; j < 32; j++){
+      circle(x,Number(list[i][j])+300,3);
+      x += windowWidth/360;
+    }
+  }
 }
 
 function getHighest(){
