@@ -54,10 +54,12 @@ function draw(){
 }
 
 function visualizeData() {
-  let list = [];
+  let list = getMax();
+  let x = 10;
+  fill("red");
   for (let i = 0; i < 367; i++){
-    let r = getAverage(i, "max");
-    list.push(r);
+    circle(x,Number(list[i][0])*4+300,5);
+    x+=4;
   }
   // fill("red");
   // let x = 0;
@@ -74,7 +76,7 @@ function getHighest(){
   let highest = 0;
   list = getMax();
   for (let i = 1; i < list.length; i++){
-    for (let j = 1; j < 32; j++){
+    for (let j = 1; j < filesList.length; j++){
       if (list[i][j] > highest){
         highest = list[i][j];
       }
@@ -105,6 +107,7 @@ function getAverage(day, maxOrmin){
 
 
 function getMax(){
+  maxTemp = [];
   for (let i = 0; i < 366; i++){
     let temporaryList = [];
     for (let j = 0; j < filesList.length; j++) {
