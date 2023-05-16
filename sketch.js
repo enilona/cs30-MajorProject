@@ -29,6 +29,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  translate(0,windowHeight);
   //count the columns
   //print(table1.getRowCount() + " total rows in table");
   //print(table1.getColumnCount() + " total columns in table");
@@ -73,11 +74,12 @@ function visualizeData() {
 }
 
 function getHighest(){
-  let highest = 0;
+  let highest = -9999999;
+  let lowest = 999999;
   list = getMax();
   for (let i = 1; i < list.length; i++){
     for (let j = 1; j < filesList.length; j++){
-      if (list[i][j] > highest){
+      if (Number(list[i][j]) > highest){
         highest = list[i][j];
       }
     }
