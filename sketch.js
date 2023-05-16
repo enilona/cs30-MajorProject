@@ -43,10 +43,10 @@ function setup() {
   //     print(table1.getString(r, c));
   //   }
   // }
-  //getMax();
+  getMax();
   getMin();
-  //getAverage(127,"max");
-  //getHighest();
+  getAverage(127,"max");
+  getHighest();
 }
 
 function draw(){
@@ -57,19 +57,16 @@ function draw(){
 function visualizeData() {
   let list = getMax();
   let x = 10;
+  let y = 1;
+  fill("black");
+  textSize(50);
+  text(1980,width/2,100);
   fill("red");
   for (let i = 0; i < 367; i++){
-    circle(x,Number(list[i][0])*4+300,5);
+    circle(x,Number(list[i][y])*4+300,5);
     x+=4;
   }
-  // fill("red");
-  // let x = 0;
-  // for (let i = 1; i < 366; i++){
-  //   for (let j = 1; j < 32; j++){
-  //     circle(x,Number(list[i][j])+300,3);
-  //     x += windowWidth/1000;
-  //   }
-  // }
+
   return list;
 }
 
