@@ -4,7 +4,8 @@
 //https://www.dataquest.io/blog/basic-statistics-in-python-probability/
 //download moment.js
 
-
+// idea for display: create a long program starting from the first data year that show the
+// weather and snow fall and stuff. the line can go all the way into the future and you can see the predicted weather.
 
 
 let table,table1;
@@ -13,6 +14,8 @@ let maxTemp = [[]];
 let minTemp=[[]];
 let filesList = [];
 let list;
+let theColor;
+let multiplyer;
 
 function preload() {
 
@@ -51,8 +54,13 @@ function setup() {
 
 function draw(){
   background(220);
-  visualizeData();
+  //visualizeData();
+  timeline();
+  displayYear();
 }
+
+
+
 
 function visualizeData() {
   let list = getMax();
@@ -130,6 +138,27 @@ function getMin(){
   }
 
   return minTemp;
-
 }
+
+function timeline(){
+  strokeWeight(3);
+  line(width/10,height/10,width - width/10, height/10);
+}
+
+function displayYear(){
+  let list = getMax();
+  let value = list[150][0];
+  if(value > 0){
+    theColor = "red";
+    multiplyer = value*10000;
+  }
+  let x = random(width);
+  let y = random(height);
+  fill(theColor);
+  for (let i = 0; i < multiplyer; i++){
+    fill(theColor);
+    rect(x,y,x+1,y+1);
+  }
+}
+
 
