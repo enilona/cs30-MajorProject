@@ -55,11 +55,9 @@ function setup() {
 function draw(){
   background(220);
   //visualizeData();
+  //displayYear();
   timeline();
-  displayYear();
 }
-
-
 
 
 function visualizeData() {
@@ -145,19 +143,20 @@ function timeline(){
   line(width/10,height/10,width - width/10, height/10);
 }
 
-function displayYear(){
+function displayYear(desiredYear){
   let list = getMax();
   let value = list[150][0];
   if(value > 0){
     theColor = "red";
-    multiplyer = value*10000;
+    multiplyer = value*1000;
   }
-  let x = random(width);
-  let y = random(height);
+  noStroke();
   fill(theColor);
   for (let i = 0; i < multiplyer; i++){
+    let x = random(width);
+    let y = random(height);
     fill(theColor);
-    rect(x,y,x+1,y+1);
+    circle(x,y,2);
   }
 }
 
