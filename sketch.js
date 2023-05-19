@@ -14,8 +14,8 @@ let maxTemp = [[]];
 let minTemp=[[]];
 let filesList = [];
 let list;
-let theColor;
-let multiplyer;
+let theColor, multiplyer;
+let input, button, greeting;
 
 function preload() {
 
@@ -50,6 +50,8 @@ function setup() {
   getMin();
   getAverage(127,"max");
   getHighest();
+  userInputButton();
+
 }
 
 function draw(){
@@ -134,13 +136,14 @@ function getMin(){
     }
     minTemp.push(temporaryList);
   }
-
+  
+  text(minTemp , width/2, height/2);
   return minTemp;
 }
 
 function timeline(){
   strokeWeight(3);
-  line(width/10,height/10,width - width/10, height/10);
+  line(width/10, height/6,width - width/10, height/6);
 }
 
 function displayYear(desiredYear){
@@ -160,4 +163,23 @@ function displayYear(desiredYear){
   }
 }
 
+function userInputButton(){
+  input = createInput();
+  input.position(20, 65);
 
+  button = createButton("GO!");
+  button.position(input.x + input.width, 65);
+  button.mousePressed(getMin);
+
+  greeting = createElement("h2", "Enter A Date!");
+  greeting.position(20, 5);
+
+  textAlign(CENTER);
+  textSize(50);
+}
+
+function greet() {
+  //let name = input.value();
+  //greeting.html("hello " + name + "!");
+  //input.value("");
+}
