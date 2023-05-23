@@ -15,7 +15,8 @@ let minTemp=[[]];
 let filesList = [];
 let list;
 let theColor, multiplyer;
-let input, button, greeting;
+let inp, button, greeting;
+const dayOfYear = date => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
 
 function preload() {
 
@@ -51,7 +52,7 @@ function setup() {
   getAverage(127,"max");
   getHighest();
   userInputButton();
-
+  getFileDate();
 }
 
 function draw(){
@@ -61,6 +62,21 @@ function draw(){
   timeline();
 }
 
+
+function getFileDate(){
+  let temporaryList = [];
+  for (let i = 0; i < filesList.length; i++){
+    r = filesList[i].getColumn(5) 
+    let element = r[1]
+    temporaryList.push(element);
+  }
+  return temporaryList;
+}
+
+
+function pastWeatherData(date){
+
+}
 
 function visualizeData() {
   let list = getMax();
@@ -164,11 +180,11 @@ function displayYear(desiredYear){
 }
 
 function userInputButton(){
-  input = createInput();
-  input.position(20, 65);
+  inp = createInput();
+  inp.position(20, 65);
 
   button = createButton("GO!");
-  button.position(input.x + input.width, 65);
+  button.position(inp.x + inp.width, 65);
   button.mousePressed(getMin);
 
   greeting = createElement("h2", "Enter A Date!");
@@ -183,3 +199,6 @@ function greet() {
   //greeting.html("hello " + name + "!");
   //input.value("");
 }
+
+
+
