@@ -15,7 +15,7 @@ let minTemp=[[]];
 let filesList = [];
 let list;
 let theColor, multiplyer;
-let inp, button, greeting;
+let inp, button, greeting,r;
 const dayOfYear = date => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
 
 function preload() {
@@ -27,7 +27,7 @@ function preload() {
     table = loadTable(table, "csv", "header");
     filesList.push(table);
   }
-  //table1 = loadTable("saskatoon1980.csv", "csv", "header");
+  table1 = loadTable("saskatoon1980.csv", "csv", "header");
 
 }
 
@@ -35,18 +35,18 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   translate(0,windowHeight);
   //count the columns
-  //print(table1.getRowCount() + " total rows in table");
-  //print(table1.getColumnCount() + " total columns in table");
+  print(table1.getRowCount() + " total rows in table");
+  print(table1.getColumnCount() + " total columns in table");
 
-  //print(table1.getColumn("Max Temp (°C)"));
+  print(table1.getColumn("Max Temp (°C)"));
 
 
   //cycle through the table
-  // for (let r = 0; r < table1.getRowCount(); r++) {
-  //   for (let c = 0; c < table1.getColumnCount(); c++){
-  //     print(table1.getString(r, c));
-  //   }
-  // }
+  for (let r = 0; r < table1.getRowCount(); r++) {
+    for (let c = 0; c < table1.getColumnCount(); c++){
+      print(table1.getString(r, c));
+    }
+  }
   getMax();
   getMin();
   getAverage(127,"max");
@@ -62,21 +62,20 @@ function draw(){
   timeline();
 }
 
+function displayWeatherData(){
 
-function getFileDate(){
+}
+
+function getFileDate(year,day){
   let temporaryList = [];
   for (let i = 0; i < filesList.length; i++){
-    r = filesList[i].getColumn(5) 
-    let element = r[1]
+    r = filesList[i].getColumn(5);
+    let element = r[1];
     temporaryList.push(element);
   }
   return temporaryList;
 }
 
-
-function pastWeatherData(date){
-
-}
 
 function visualizeData() {
   let list = getMax();
@@ -195,9 +194,9 @@ function userInputButton(){
 }
 
 function greet() {
-  //let name = input.value();
-  //greeting.html("hello " + name + "!");
-  //input.value("");
+  let name = inp.value();
+  greeting.html("hello " + name + "!");
+  inp.value("");
 }
 
 
