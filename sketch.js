@@ -16,19 +16,20 @@ let filesList = [];
 let list;
 let theColor, multiplyer;
 let inp, button, greeting,r;
+let dateInput = [];
 const dayOfYear = date => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+
 
 function preload() {
 
   //my table is comma separated value "csv"
   //and has a header specifying the columns labels
-  for (let i = 1980; i <= 2011; i++){
+  for (let i = 1980; i <= 2022; i++){
     table = `saskatoon${i}.csv`;
     table = loadTable(table, "csv", "header");
     filesList.push(table);
   }
   table1 = loadTable("saskatoon1980.csv", "csv", "header");
-
 }
 
 function setup() {
@@ -39,8 +40,6 @@ function setup() {
   print(table1.getColumnCount() + " total columns in table");
 
   print(table1.getColumn("Max Temp (°C)"));
-
-
   //cycle through the table
   for (let r = 0; r < table1.getRowCount(); r++) {
     for (let c = 0; c < table1.getColumnCount(); c++){
@@ -75,7 +74,6 @@ function getFileDate(year,day){
   }
   return temporaryList;
 }
-
 
 function visualizeData() {
   let list = getMax();
@@ -181,16 +179,22 @@ function displayYear(desiredYear){
 function userInputButton(){
   inp = createInput();
   inp.position(20, 65);
-
   button = createButton("GO!");
   button.position(inp.x + inp.width, 65);
   button.mousePressed(getMin);
-
   greeting = createElement("h2", "Enter A Date!");
   greeting.position(20, 5);
-
   textAlign(CENTER);
   textSize(50);
+  let container = createElement("div");
+  container.class("form-group position-relative");
+  container.parent("quiz");
+  let question;
+  question = createInput("");
+  question.class("form-control mb-3 question");
+  question.parent(container);
+  dateInput.push(question);
+  // add container div for label and question -- allows for icon validation
 }
 
 function greet() {
