@@ -46,6 +46,7 @@ function setup() {
       print(table1.getString(r, c));
     }
   }
+  addButtons();
   getMax();
   getMin();
   getAverage(127,"max");
@@ -179,28 +180,35 @@ function displayYear(desiredYear){
 function userInputButton(){
   inp = createInput();
   inp.position(20, 65);
-  button = createButton("GO!");
-  button.position(inp.x + inp.width, 65);
-  button.mousePressed(getMin);
-  greeting = createElement("h2", "Enter A Date!");
-  greeting.position(20, 5);
-  textAlign(CENTER);
-  textSize(50);
+  // button = createButton("GO!");
+  // button.position(inp.x + inp.width, 65);
+  // button.mousePressed(getMin);
+  // greeting = createElement("h2", "Enter A Date!");
+  // greeting.position(20, 5);
+  // textAlign(CENTER);
+  // textSize(50);
+
   let container = createElement("div");
   container.class("form-group position-relative");
   container.parent("quiz");
   let question;
   question = createInput("");
-  question.class("form-control mb-3 question");
   question.parent(container);
   dateInput.push(question);
+
   // add container div for label and question -- allows for icon validation
 }
+function addButtons() {
+  // check answers button
+  let checkButton = createButton("Go!");
+  checkButton.attribute("type", "button");
+  checkButton.parent("quiz");
+  checkButton.class("btn btn-success mb-4 d-block");
+  checkButton.mousePressed(evaluateInput);
+}
 
-function greet() {
-  let name = inp.value();
-  greeting.html("hello " + name + "!");
-  inp.value("");
+function evaluateInput() {
+  
 }
 
 
