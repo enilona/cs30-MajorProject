@@ -36,17 +36,17 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   translate(0,windowHeight);
   //count the columns
-  print(table1.getRowCount() + " total rows in table");
-  print(table1.getColumnCount() + " total columns in table");
+  // print(table1.getRowCount() + " total rows in table");
+  // print(table1.getColumnCount() + " total columns in table");
 
-  print(table1.getColumn("Max Temp (°C)"));
-  //cycle through the table
-  for (let r = 0; r < table1.getRowCount(); r++) {
-    for (let c = 0; c < table1.getColumnCount(); c++){
-      print(table1.getString(r, c));
-    }
-  }
-  addButtons();
+  // print(table1.getColumn("Max Temp (°C)"));
+  // //cycle through the table
+  // for (let r = 0; r < table1.getRowCount(); r++) {
+  //   for (let c = 0; c < table1.getColumnCount(); c++){
+  //     print(table1.getString(r, c));
+  //   }
+  // }
+  //addButtons();
   getMax();
   getMin();
   getAverage(127,"max");
@@ -187,6 +187,12 @@ function userInputButton(){
   // greeting.position(20, 5);
   // textAlign(CENTER);
   // textSize(50);
+    // check answers button
+  let checkButton = createButton("Go!");
+  checkButton.attribute("type", "button");
+  checkButton.parent("quiz");
+  checkButton.class("btn btn-success mb-4 d-block");
+  //checkButton.mousePressed(evaluateInput);
 
   let container = createElement("div");
   container.class("form-group position-relative");
@@ -194,22 +200,20 @@ function userInputButton(){
   let question;
   question = createInput("");
   question.parent(container);
-  dateInput.push(question);
-
+  if (checkButton.mousePressed()){
+    dateInput.push(question);
+  }
+  return dateInput;
   // add container div for label and question -- allows for icon validation
 }
-function addButtons() {
-  // check answers button
-  let checkButton = createButton("Go!");
-  checkButton.attribute("type", "button");
-  checkButton.parent("quiz");
-  checkButton.class("btn btn-success mb-4 d-block");
-  checkButton.mousePressed(evaluateInput);
-}
+// function addButtons() {
+
+// }
 
 function evaluateInput() {
-  
+  let temporaryList =[];
+  temporaryList.push(dateInput)
+  return temporaryList;
 }
-
 
 
