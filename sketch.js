@@ -18,6 +18,7 @@ let theColor, multiplyer;
 let inp, button, greeting,r;
 let dateInput = [];
 const dayOfYear = date => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+let field = document.querySelector('#date');
 
 
 function preload() {
@@ -34,7 +35,17 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  translate(0,windowHeight);
+
+  // Handle date changes
+  date.addEventListener('input', function () {
+
+  // Get the date
+  let theDate = new Date(field.value);
+  console.log(theDate.getFullYear());
+
+  console.log(dayOfYear(theDate));
+  
+});
   //count the columns
   // print(table1.getRowCount() + " total rows in table");
   // print(table1.getColumnCount() + " total columns in table");
@@ -177,43 +188,45 @@ function displayYear(desiredYear){
   }
 }
 
-function userInputButton(){
-  inp = createInput();
-  inp.position(20, 65);
-  // button = createButton("GO!");
-  // button.position(inp.x + inp.width, 65);
-  // button.mousePressed(getMin);
-  // greeting = createElement("h2", "Enter A Date!");
-  // greeting.position(20, 5);
-  // textAlign(CENTER);
-  // textSize(50);
-    // check answers button
-  let checkButton = createButton("Go!");
-  checkButton.attribute("type", "button");
-  checkButton.parent("quiz");
-  checkButton.class("btn btn-success mb-4 d-block");
-  //checkButton.mousePressed(evaluateInput);
 
-  let container = createElement("div");
-  container.class("form-group position-relative");
-  container.parent("quiz");
-  let question;
-  question = createInput("");
-  question.parent(container);
-  if (checkButton.mousePressed()){
-    dateInput.push(question);
-  }
-  return dateInput;
-  // add container div for label and question -- allows for icon validation
-}
-// function addButtons() {
 
+// function userInputButton(){
+//   inp = createInput();
+//   inp.position(20, 65);
+//   // button = createButton("GO!");
+//   // button.position(inp.x + inp.width, 65);
+//   // button.mousePressed(getMin);
+//   // greeting = createElement("h2", "Enter A Date!");
+//   // greeting.position(20, 5);
+//   // textAlign(CENTER);
+//   // textSize(50);
+//     // check answers button
+//   let checkButton = createButton("Go!");
+//   checkButton.attribute("type", "button");
+//   checkButton.parent("quiz");
+//   checkButton.class("btn btn-success mb-4 d-block");
+//   //checkButton.mousePressed(evaluateInput);
+
+//   let container = createElement("div");
+//   container.class("form-group position-relative");
+//   container.parent("quiz");
+//   let question;
+//   question = createInput("");
+//   question.parent(container);
+//   if (checkButton.mousePressed()){
+//     dateInput.push(question);
+//   }
+//   return dateInput;
+//   // add container div for label and question -- allows for icon validation
 // }
+// // function addButtons() {
 
-function evaluateInput() {
-  let temporaryList =[];
-  temporaryList.push(dateInput)
-  return temporaryList;
-}
+// // }
+
+// function evaluateInput() {
+//   let temporaryList =[];
+//   temporaryList.push(dateInput)
+//   return temporaryList;
+// }
 
 
