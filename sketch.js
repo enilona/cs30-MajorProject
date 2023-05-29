@@ -4,8 +4,6 @@
 //https://www.dataquest.io/blog/basic-statistics-in-python-probability/
 //download moment.js
 
-// idea for display: create a long program starting from the first data year that show the
-// weather and snow fall and stuff. the line can go all the way into the future and you can see the predicted weather.
 
 
 let table,table1;
@@ -18,7 +16,7 @@ let theColor, multiplyer;
 let inp, button, greeting,r;
 let dateInput = [];
 const dayOfYear = date => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-let field = document.querySelector('#date');
+let field = document.querySelector("#date");
 
 
 function preload() {
@@ -35,35 +33,24 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
-  // Handle date changes
-  date.addEventListener('input', function () {
-
-  // Get the date
-  let theDate = new Date(field.value);
-  console.log(theDate.getFullYear());
-
-  console.log(dayOfYear(theDate));
-  
-});
   //count the columns
   // print(table1.getRowCount() + " total rows in table");
   // print(table1.getColumnCount() + " total columns in table");
 
   // print(table1.getColumn("Max Temp (°C)"));
   // //cycle through the table
-  // for (let r = 0; r < table1.getRowCount(); r++) {
-  //   for (let c = 0; c < table1.getColumnCount(); c++){
-  //     print(table1.getString(r, c));
-  //   }
-  // }
-  //addButtons();
+  for (let r = 0; r < table1.getRowCount(); r++) {
+    for (let c = 0; c < table1.getColumnCount(); c++){
+      print(table1.getString(r, c));
+    }
+  }
   getMax();
   getMin();
   getAverage(127,"max");
   getHighest();
-  userInputButton();
+  getDayInput();
   getFileDate();
+ 
 }
 
 function draw(){
@@ -99,7 +86,6 @@ function visualizeData() {
     circle(x,Number(list[i][y])*4+300,5);
     x+=4;
   }
-
   return list;
 }
 
@@ -188,45 +174,18 @@ function displayYear(desiredYear){
   }
 }
 
-
-
-// function userInputButton(){
-//   inp = createInput();
-//   inp.position(20, 65);
-//   // button = createButton("GO!");
-//   // button.position(inp.x + inp.width, 65);
-//   // button.mousePressed(getMin);
-//   // greeting = createElement("h2", "Enter A Date!");
-//   // greeting.position(20, 5);
-//   // textAlign(CENTER);
-//   // textSize(50);
-//     // check answers button
-//   let checkButton = createButton("Go!");
-//   checkButton.attribute("type", "button");
-//   checkButton.parent("quiz");
-//   checkButton.class("btn btn-success mb-4 d-block");
-//   //checkButton.mousePressed(evaluateInput);
-
-//   let container = createElement("div");
-//   container.class("form-group position-relative");
-//   container.parent("quiz");
-//   let question;
-//   question = createInput("");
-//   question.parent(container);
-//   if (checkButton.mousePressed()){
-//     dateInput.push(question);
-//   }
-//   return dateInput;
-//   // add container div for label and question -- allows for icon validation
-// }
-// // function addButtons() {
-
-// // }
-
-// function evaluateInput() {
-//   let temporaryList =[];
-//   temporaryList.push(dateInput)
-//   return temporaryList;
-// }
+function getDayInput(){
+  // Handle date changes
+  date.addEventListener("input", function () {
+    // Get the date
+    let theDate = new Date(field.value);
+    console.log(theDate.getFullYear());
+    console.log(dayOfYear(theDate));
+    dateInput.push(theDate.getFullYear());
+    dateInput.push(dayOfYear(theDate));
+    table1 = loadTable(`saskatoon${dateInput[0]}.csv`, "csv", "header");
+    console.log(table1);
+  });
+}
 
 
