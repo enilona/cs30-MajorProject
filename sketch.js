@@ -19,6 +19,7 @@ const dayOfYear = date => Math.floor((date - new Date(date.getFullYear(), 0, 0))
 let field = document.querySelector("#date");
 
 
+
 function preload() {
 
   //my table is comma separated value "csv"
@@ -57,9 +58,8 @@ function draw(){
   //visualizeData();
   //displayYear();
   timeline();
-  if (mouseIsPressed){
-    displayWeatherData();
-  }
+  displayWeatherData();
+
 }
 
 function getFileDate(year,day){
@@ -181,22 +181,23 @@ function getDayInput(){
     console.log(dayOfYear(theDate));
     dateInput.push(theDate.getFullYear());
     dateInput.push(dayOfYear(theDate));
-    // table1 = loadTable(`saskatoon${dateInput[0]}.csv`, "csv", "header");
-    // console.log(table1);
+    table1 = loadTable(`saskatoon${dateInput[0]}.csv`, "csv", "header");
+    console.log(table1);
+    return table1.getColumn("Max Temp (°C)");
   });
 }
 
 function displayWeatherData(){
   let tempList = [];
-  let theCollum;
-  if (dateInput[0] < 2023){
+  //if (dateInput[0] < 2023){
     //console.log(dateInput[0]);
     let thetest = loadTable(`saskatoon${1987}.csv`, "csv", "header");
-    theCollum = thetest.getColumn("Max Temp (°C)");
+    let theCollum = thetest.getColumn("Max Temp (°C)");
     tempList.push(theCollum);
     //console.log(thetest.getRow(100));
-  }
-  return theCollum;
+  
+  //}
+  return tempList;
 }
 
 
