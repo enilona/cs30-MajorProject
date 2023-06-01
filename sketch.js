@@ -38,7 +38,7 @@ function setup() {
   // print(table1.getRowCount() + " total rows in table");
   // print(table1.getColumnCount() + " total columns in table");
 
-  //print(table1.getColumn("Max Temp (°C)"));
+  // print(table1.getColumn("Max Temp (°C)"));
   // //cycle through the table
   // for (let r = 0; r < table1.getRowCount(); r++) {
   //   for (let c = 0; c < table1.getColumnCount(); c++){
@@ -181,7 +181,7 @@ function getDayInput(){
     console.log(dayOfYear(theDate));
     dateInput.push(theDate.getFullYear());
     dateInput.push(dayOfYear(theDate));
-    table1 = loadTable(`saskatoon${dateInput[0]}.csv`, "csv", "header");
+    table1 = loadTable(`saskatoon${2006}.csv`, "csv", "header");
     console.log(table1);
     return table1.getColumn("Max Temp (°C)");
   });
@@ -189,20 +189,15 @@ function getDayInput(){
 
 function displayWeatherData(){
   let tempList = [];
-<<<<<<< Updated upstream
-=======
-  let theCollum;
->>>>>>> Stashed changes
   //if (dateInput[0] < 2023){
     //console.log(dateInput[0]);
-    let thetest = loadTable(`saskatoon${1987}.csv`, "csv", "header");
-    let theCollum = thetest.getColumn("Max Temp (°C)");
+    let i = 1987
+    let r = "saskatoon1987.csv";
+    let thetest = loadTable(r, "csv", "header");
+    let theCollum = filesList[0].getColumn;
     tempList.push(theCollum);
     //console.log(thetest.getRow(100));
-<<<<<<< Updated upstream
   
-=======
->>>>>>> Stashed changes
   //}
   return tempList;
 }
