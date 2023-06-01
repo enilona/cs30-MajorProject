@@ -51,7 +51,7 @@ function setup() {
   getHighest();
   getDayInput();
   getFileDate();
-  table2 = displayWeatherData();
+
 }
 
 function draw(){
@@ -182,20 +182,23 @@ function getDayInput(){
     dateInput.push(theDate.getFullYear());
     dateInput.push(dayOfYear(theDate));
     table1 = loadTable(`./saskatoon${2006}.csv`, "csv", "header");
-    console.log(table1);
-    return table1.getColumn("Max Temp (°C)");
+    return dateInput;
   });
+  console.log(dateInput);
+  if (dateInput[0] < 2023){
+    console.log(dateInput);
+    table2 = displayWeatherData();
+  }
 }
 
 function displayWeatherData(){
-  let tempList = [];
-  //if (dateInput[0] < 2023){
-    //console.log(dateInput[0]);
-    let i = 1987
-    let j = './saskatoon2000.csv';
-    let thetest = loadTable("./saskatoon1980.csv", "csv", "header");
-    
-  //}
+  //console.log(dateInput[0]);
+  let i = 1987;
+  let s = dateInput[0];
+  let j = `./saskatoon${s}.csv`;
+  let thetest = loadTable(j, "csv", "header");
+  
+
   print(thetest.columns[10]);
   return thetest;
 }
