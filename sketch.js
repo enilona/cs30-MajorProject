@@ -38,7 +38,7 @@ function setup() {
   // print(table1.getRowCount() + " total rows in table");
   // print(table1.getColumnCount() + " total columns in table");
 
-  // print(table1.getColumn("Max Temp (°C)"));
+  //print(table1.getColumn("Max Temp (°C)"));
   // //cycle through the table
   // for (let r = 0; r < table1.getRowCount(); r++) {
   //   for (let c = 0; c < table1.getColumnCount(); c++){
@@ -189,13 +189,20 @@ function getDayInput(){
 
 function displayWeatherData(){
   let tempList = [];
+<<<<<<< Updated upstream
+=======
+  let theCollum;
+>>>>>>> Stashed changes
   //if (dateInput[0] < 2023){
     //console.log(dateInput[0]);
     let thetest = loadTable(`saskatoon${1987}.csv`, "csv", "header");
     let theCollum = thetest.getColumn("Max Temp (°C)");
     tempList.push(theCollum);
     //console.log(thetest.getRow(100));
+<<<<<<< Updated upstream
   
+=======
+>>>>>>> Stashed changes
   //}
   return tempList;
 }
