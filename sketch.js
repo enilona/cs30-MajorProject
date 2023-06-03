@@ -6,7 +6,7 @@
 
 
 
-let table,table1, table2;
+let table,table1, dayweather;
 let anotherTemp = [];
 let maxTemp = [[]];
 let minTemp=[[]];
@@ -45,12 +45,13 @@ function setup() {
   //     print(table1.getString(r, c));
   //   }
   // }
-  getMax();
-  getMin();
-  getAverage(127,"max");
-  getHighest();
-  getFileDate();
-
+  getDayInput();
+  // getMax();
+  // getMin();
+  // getAverage(127,"max");
+  // getHighest();
+  // getFileDate();
+  //table2 = displayWeatherData();
 }
 
 function draw(){
@@ -58,14 +59,9 @@ function draw(){
   //visualizeData();
   //displayYear();
   timeline();
-  if (mouseX>200 && mouseY > 200 && mousePressed){
-    table2 = displayWeatherData();
-  }
+  goButton();
+}
 
-}
-function mousePressed(){
-  getDayInput();
-}
 
 function getFileDate(year,day){
   let temporaryList = [];
@@ -186,21 +182,31 @@ function getDayInput(){
     console.log(dayOfYear(theDate));
     dateInput.push(theDate.getFullYear());
     dateInput.push(dayOfYear(theDate));
-    table1 = loadTable(`./saskatoon${2006}.csv`, "csv", "header");
+    //table1 = loadTable(`./saskatoon${2006}.csv`, "csv", "header");
     return dateInput;
   });
 }
 
-function displayWeatherData(){
-  console.log(dateInput[0]);
+function loadWeatherInputs(){
 
-  // let i = 1987;
-  // let s = dateInput[0];
-  // let j = `./saskatoon${s}.csv`;
-  // let thetest = loadTable(j, "csv", "header");
 
-  // print(thetest.columns[10]);
-  // return thetest;
+  let s = dateInput[0];
+  let j = `./saskatoon${s}.csv`;
+  print(j);
+  let yeartable;
+  yeartable = loadTable(j, "csv", "header");
+
+  // let row = yeartable.getRow(3);
+  // print(row.getString(3));
+  let row = yeartable.getRow(1);
+  return row.getString(1);
 }
 
-
+function goButton(){
+  button = createButton('Go!');
+  button.position(100, 100);
+  button.mousePressed(buttonInput);
+}
+function buttonInput(){
+  dayweather = loadWeatherInputs();
+}
