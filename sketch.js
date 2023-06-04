@@ -4,26 +4,27 @@
 //https://www.dataquest.io/blog/basic-statistics-in-python-probability/
 //download moment.js
 
-const { Table } = require("../../../../.vscode/extensions/wmcicompsci.cs30-p5-1.5.0/p5types");
 
 
 
 
 let table,table1, dayweather;
-let yeartable;
+let yeartable, row;
 let require;
 let maxTemp = [[]];
 let minTemp=[[]];
 let filesList = [];
 let list;
 let theColor, multiplyer;
-let inp, button, greeting,r;
+let button,r;
 let dateInput = [];
 const dayOfYear = date => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
 let field = document.querySelector("#date");
-//const { TableRow, Table } = require("../../../../.vscode/extensions/wmcicompsci.cs30-p5-1.5.0/p5types");
+// const config: CTConfig = {columns, data};
+// const ct = new CanvasTable(canvas, config);
+// await ct.generateTable();
 
-
+//import { CanvasTable, CTConfig } from "canvas-table";
 
 function preload() {
 
@@ -213,12 +214,37 @@ function goButton(){
   button.position(100, 100);
   button.mousePressed(buttonInput);
 }
+function showButton(){
+  button = createButton("Show Table");
+  button.position(200,200);
+  button.mousePressed(showTable);
+}
 function buttonInput(){
   dayweather = loadWeatherInputs();
-  let row =  dayweather;
-  print(row.getString(dateInput[1],"Max Temp (°C)"));
+  row = dayweather.getString(dateInput[1],1);
+  showButton();
+  return row;
 }
-new p5.Table([rows]){
+
+function showTable() {
+  //clear();
+  text("Click on the button to set the" +
+       " values of the table", 250, 250);
   
+  // // Show all the columns present
+  // for (let c = 0; c < 5; c++) {
+  //   text(row.getColumn(5),20 + 80 * c, 80);
+  // }
+  
+  // // Show all the rows currently
+  // // present in the table
+  // for (let r = 0; r < 5; r++) {
+  //   for (let c = 0; c < 5; c++) {
+  //     text(row.getString(r,c),
+  //       20 + 80 * c,
+  //       100 + 20 * r);
+  //   }
+  // }
 }
+
   
