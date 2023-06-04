@@ -4,10 +4,14 @@
 //https://www.dataquest.io/blog/basic-statistics-in-python-probability/
 //download moment.js
 
+const { Table } = require("../../../../.vscode/extensions/wmcicompsci.cs30-p5-1.5.0/p5types");
+
+
 
 
 let table,table1, dayweather;
-let anotherTemp = [];
+let yeartable;
+let require;
 let maxTemp = [[]];
 let minTemp=[[]];
 let filesList = [];
@@ -17,6 +21,7 @@ let inp, button, greeting,r;
 let dateInput = [];
 const dayOfYear = date => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
 let field = document.querySelector("#date");
+//const { TableRow, Table } = require("../../../../.vscode/extensions/wmcicompsci.cs30-p5-1.5.0/p5types");
 
 
 
@@ -25,9 +30,11 @@ function preload() {
   //my table is comma separated value "csv"
   //and has a header specifying the columns labels
   for (let i = 1980; i <= 2022; i++){
+    let tempList = [];
     table = `saskatoon${i}.csv`;
     table = loadTable(table, "csv", "header");
-    filesList.push(table);
+    tempList.push(i, table);
+    filesList.push(tempList);
   }
   table1 = loadTable("saskatoon1980.csv", "csv", "header");
 }
@@ -176,6 +183,7 @@ function displayYear(desiredYear){
 function getDayInput(){
   // Handle date changes
   date.addEventListener("input", function () {
+    dateInput = [];
     // Get the date
     let theDate = new Date(field.value);
     console.log(theDate.getFullYear());
@@ -187,26 +195,30 @@ function getDayInput(){
   });
 }
 
+
 function loadWeatherInputs(){
-
-
   let s = dateInput[0];
-  let j = `./saskatoon${s}.csv`;
-  print(j);
-  let yeartable;
-  yeartable = loadTable(j, "csv", "header");
-
-  // let row = yeartable.getRow(3);
-  // print(row.getString(3));
-  let row = yeartable.getRow(1);
-  return row.getString(1);
+  //let j = `./saskatoon${s}.csv`;
+  for (let i = 0; i < filesList.length; i++ ){
+    if (filesList[i][0]=== dateInput[0]){
+      yeartable = filesList[i][1];
+      print(yeartable);
+      return yeartable;
+    }
+  }
 }
 
 function goButton(){
-  button = createButton('Go!');
+  button = createButton("Go!");
   button.position(100, 100);
   button.mousePressed(buttonInput);
 }
 function buttonInput(){
   dayweather = loadWeatherInputs();
+  let row =  dayweather;
+  print(row.getString(dateInput[1],"Max Temp (°C)"));
 }
+new p5.Table([rows]){
+  
+}
+  
