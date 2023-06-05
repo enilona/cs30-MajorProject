@@ -9,8 +9,8 @@
 
 
 let table,table1, dayweather;
-let yeartable, row;
-let require;
+let yeartable, row, cellSize = 50, ROWS = 8, COLS = 2;
+let backgroundImage;
 let maxTemp = [[]];
 let minTemp=[[]];
 let filesList = [];
@@ -27,7 +27,7 @@ let field = document.querySelector("#date");
 //import { CanvasTable, CTConfig } from "canvas-table";
 
 function preload() {
-
+  backgroundImage = loadImage("backgroundimage.png");
   //my table is comma separated value "csv"
   //and has a header specifying the columns labels
   for (let i = 1980; i <= 2022; i++){
@@ -64,10 +64,17 @@ function setup() {
 
 function draw(){
   background(220);
+  image(backgroundImage, 225,88,backgroundImage.width,backgroundImage.height);
+  circle(width/2,height/2,4);
+  circle(backgroundImage.width/1.22 + 225,backgroundImage.height/5+88,4);
   //visualizeData();
   //displayYear();
-  timeline();
   goButton();
+  // if(mouseIsPressed){
+  //   console.log(mouseX,mouseY);
+
+  // }
+  displayWeatherData();
 }
 
 
@@ -196,7 +203,6 @@ function getDayInput(){
   });
 }
 
-
 function loadWeatherInputs(){
   let s = dateInput[0];
   //let j = `./saskatoon${s}.csv`;
@@ -208,43 +214,72 @@ function loadWeatherInputs(){
     }
   }
 }
-
 function goButton(){
   button = createButton("Go!");
   button.position(100, 100);
-  button.mousePressed(buttonInput);
+  button.mousePressed(displayWeatherData);
 }
-function showButton(){
-  button = createButton("Show Table");
-  button.position(200,200);
-  button.mousePressed(showTable);
+function checkempty(value){
+  if(value === ""){
+    return value.replace("", "no data");
+  }
+  else{
+    return value;
+  }
 }
-function buttonInput(){
+
+function displayWeatherData(){
+  clear();
+  background(220);
+  image(backgroundImage, 225,88,backgroundImage.width,backgroundImage.height);
   dayweather = loadWeatherInputs();
-  row = dayweather.getString(dateInput[1],1);
-  showButton();
-  return row;
-}
+  //dayweather.getString(dateInput[1],1);
+  //max temp
+  textSize(42);
+  textFont("Questrial");
+  text(checkempty(dayweather.getString(dateInput[1],9))+"°C",backgroundImage.width/1.2 + 225,backgroundImage.height/4.7+88);
+  //min temp
+  text(checkempty(dayweather.getString(dateInput[1],11))+"°C",backgroundImage.width/1.2 + 225,backgroundImage.height/3.2+88);
+  textSize(20);
+  //total rain
+  text(checkempty(dayweather.getString(dateInput[1],19))+" mm",backgroundImage.width/1.7 + 225,backgroundImage.height/6.8 + 88);
+  //Spd of Max Gust (km/h)
+  text(checkempty(dayweather.getString(dateInput[1],29))+" km/h",backgroundImage.width/1.7 + 225,backgroundImage.height/4.7 + 88);
+  //total snow
+  text(checkempty(dayweather.getString(dateInput[1],21))+" cm",backgroundImage.width/1.7 + 225,backgroundImage.height/3.5 + 88);
+  //snow on ground
+  text(checkempty(dayweather.getString(dateInput[1],25))+" cm",backgroundImage.width/1.7 + 225,backgroundImage.height/2.8 + 88);
 
-function showTable() {
-  //clear();
-  text("Click on the button to set the" +
-       " values of the table", 250, 250);
-  
-  // // Show all the columns present
-  // for (let c = 0; c < 5; c++) {
-  //   text(row.getColumn(5),20 + 80 * c, 80);
-  // }
-  
-  // // Show all the rows currently
-  // // present in the table
-  // for (let r = 0; r < 5; r++) {
-  //   for (let c = 0; c < 5; c++) {
-  //     text(row.getString(r,c),
-  //       20 + 80 * c,
-  //       100 + 20 * r);
-  //   }
-  // }
 }
-
-  
+// 0: "Longitude (x)"
+// 1: "Latitude (y)"
+// 2: "Station Name"
+// 3: "Climate ID"
+// 4: "Date/Time"
+// 5: "Year"
+// 6: "Month"
+// 7: "Day"
+// 8: "Data Quality"
+// 9: "Max Temp (°C)"
+// 10: "Max Temp Flag"
+// 11: "Min Temp (°C)"
+// 12: "Min Temp Flag"
+// 13: "Mean Temp (°C)"
+// 14: "Mean Temp Flag"
+// 15: "Heat Deg Days (°C)"
+// 16: "Heat Deg Days Flag"
+// 17: "Cool Deg Days (°C)"
+// 18: "Cool Deg Days Flag"
+// 19: "Total Rain (mm)"
+// 20: "Total Rain Flag"
+// 21: "Total Snow (cm)"
+// 22: "Total Snow Flag"
+// 23: "Total Precip (mm)"
+// 24: "Total Precip Flag"
+// 25: "Snow on Grnd (cm)"
+// 26: "Snow on Grnd Flag"
+// 27: "Dir of Max Gust (10s deg)"
+// 28: "Dir of Max Gust Flag"
+// 29: "Spd of Max Gust (km/h)"
+// 30: "Spd of Max Gust Flag"
+5,6,7,9,11,  19,21,25,29;
