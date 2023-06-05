@@ -20,17 +20,13 @@ let button,r;
 let dateInput = [];
 const dayOfYear = date => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
 let field = document.querySelector("#date");
-// const config: CTConfig = {columns, data};
-// const ct = new CanvasTable(canvas, config);
-// await ct.generateTable();
-
-//import { CanvasTable, CTConfig } from "canvas-table";
+let monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 function preload() {
   backgroundImage = loadImage("backgroundimage.png");
   //my table is comma separated value "csv"
   //and has a header specifying the columns labels
-  for (let i = 1980; i <= 2022; i++){
+  for (let i = 1980; i <= 2023; i++){
     let tempList = [];
     table = `saskatoon${i}.csv`;
     table = loadTable(table, "csv", "header");
@@ -171,25 +167,9 @@ function timeline(){
   line(width/10, height/6,width - width/10, height/6);
 }
 
-function displayYear(desiredYear){
-  let list = getMax();
-  let value = list[150][0];
-  if(value > 0){
-    theColor = "red";
-    multiplyer = value*1000;
-  }
-  noStroke();
-  fill(theColor);
-  for (let i = 0; i < multiplyer; i++){
-    let x = random(width);
-    let y = random(height);
-    fill(theColor);
-    circle(x,y,2);
-  }
-}
-
 function getDayInput(){
   // Handle date changes
+  // eslint-disable-next-line no-undef
   date.addEventListener("input", function () {
     dateInput = [];
     // Get the date
@@ -198,6 +178,7 @@ function getDayInput(){
     console.log(dayOfYear(theDate));
     dateInput.push(theDate.getFullYear());
     dateInput.push(dayOfYear(theDate));
+    dateInput.push(monthList[month(theDate)]);
     //table1 = loadTable(`./saskatoon${2006}.csv`, "csv", "header");
     return dateInput;
   });
@@ -239,7 +220,7 @@ function displayWeatherData(){
   textFont("Questrial");
   text(checkempty(dayweather.getString(dateInput[1],9))+"°C",backgroundImage.width/1.2 + 225,backgroundImage.height/4.7+88);
   //min temp
-  text(checkempty(dayweather.getString(dateInput[1],11))+"°C",backgroundImage.width/1.2 + 225,backgroundImage.height/3.2+88);
+  text(checkempty(dayweather.getString(dateInput[1],11))+"°C",backgroundImage.width/1.2 + 225,backgroundImage.height/3.3+88);
   textSize(20);
   //total rain
   text(checkempty(dayweather.getString(dateInput[1],19))+" mm",backgroundImage.width/1.7 + 225,backgroundImage.height/6.8 + 88);
@@ -249,6 +230,12 @@ function displayWeatherData(){
   text(checkempty(dayweather.getString(dateInput[1],21))+" cm",backgroundImage.width/1.7 + 225,backgroundImage.height/3.5 + 88);
   //snow on ground
   text(checkempty(dayweather.getString(dateInput[1],25))+" cm",backgroundImage.width/1.7 + 225,backgroundImage.height/2.8 + 88);
+  //year
+  textSize(70);
+  text(checkempty(dayweather.getString(dateInput[1],5)),backgroundImage.width/5 + 225,backgroundImage.height/5.2 + 88);
+  //month and day
+  textSize(42);
+  text(checkempty(dateInput[2] + " " + dayweather.getString(dateInput[1],7)),backgroundImage.width/5 + 225,backgroundImage.height/3.5 + 88);
 
 }
 // 0: "Longitude (x)"
