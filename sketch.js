@@ -50,7 +50,7 @@ function setup() {
   //   }
   // }
   getDayInput();
-  // getMax();
+  getMax();
   // getMin();
   // getAverage(127,"max");
   // getHighest();
@@ -139,12 +139,11 @@ function getMax(){
   for (let i = 0; i < 366; i++){
     let temporaryList = [];
     for (let j = 0; j < filesList.length; j++) {
-      let aTemp = filesList[j].getColumn("Max Temp (°C)");
+      let aTemp = filesList[j][1].getColumn("Max Temp (°C)");
       temporaryList.push(aTemp[i]);
     }
     maxTemp.push(temporaryList);
   }
-
   return maxTemp;
 }
 
@@ -152,7 +151,7 @@ function getMin(){
   for (let i = 0; i < 366; i++){
     let temporaryList = [];
     for (let j = 0; j < filesList.length; j++) {
-      let aTemp = filesList[j].getColumn("Min Temp (°C)");
+      let aTemp = filesList[j][1].getColumn("Min Temp (°C)");
       temporaryList.push(aTemp[i]);
     }
     minTemp.push(temporaryList);
@@ -217,11 +216,11 @@ function displayWeatherData(){
   //dayweather.getString(dateInput[1],1);
   //max temp
   textSize(42);
-  textFont("Questrial");
+  textFont("Cursive");
   text(checkempty(dayweather.getString(dateInput[1],9))+"°C",backgroundImage.width/1.2 + 225,backgroundImage.height/4.7+88);
   //min temp
   text(checkempty(dayweather.getString(dateInput[1],11))+"°C",backgroundImage.width/1.2 + 225,backgroundImage.height/3.3+88);
-  textSize(20);
+  textSize(22);
   //total rain
   text(checkempty(dayweather.getString(dateInput[1],19))+" mm",backgroundImage.width/1.7 + 225,backgroundImage.height/6.8 + 88);
   //Spd of Max Gust (km/h)
