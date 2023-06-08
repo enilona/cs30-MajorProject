@@ -50,7 +50,7 @@ function setup() {
   //   }
   // }
   getDayInput();
-  getMax();
+  getListofMax();
   // getMin();
   // getAverage(127,"max");
   // getHighest();
@@ -85,7 +85,7 @@ function getFileDate(year,day){
 }
 
 function visualizeData() {
-  let list = getMax();
+  let list = getListofMax();
   let x = 10;
   let y = 1;
   fill("black");
@@ -98,11 +98,10 @@ function visualizeData() {
   }
   return list;
 }
-
 function getHighest(){
   let highest = -9999999;
   let lowest = 999999;
-  list = getMax();
+  list = getListofMax();
   for (let i = 1; i < list.length; i++){
     for (let j = 1; j < filesList.length; j++){
       if (Number(list[i][j]) > highest){
@@ -113,14 +112,13 @@ function getHighest(){
   return highest;
   //return list;
 }
-
 function getAverage(day, maxOrmin){
   let average = 0;
   if (day === "today"){
     day = 127;
   }
   if (maxOrmin === "max"){
-    list = getMax();
+    list = getListofMax();
   }
   if (maxOrmin === "min"){
     list = getMin();
@@ -132,9 +130,14 @@ function getAverage(day, maxOrmin){
 
   return average;
 }
-
-
-function getMax(){
+function getPartialAverage(day){
+  let average = 0;
+  let list = ge
+  for (let i = 0; i < 10; i ++){
+    average += Number(list[day][i]);
+  }
+}
+function getListofMax(){
   maxTemp = [];
   for (let i = 0; i < 366; i++){
     let temporaryList = [];
@@ -161,9 +164,8 @@ function getMin(){
   return minTemp;
 }
 
-function timeline(){
-  strokeWeight(3);
-  line(width/10, height/6,width - width/10, height/6);
+function predictFuture(){
+
 }
 
 function getDayInput(){
@@ -236,6 +238,8 @@ function displayWeatherData(){
   textSize(42);
   text(checkempty(dateInput[2] + " " + dayweather.getString(dateInput[1],7)),backgroundImage.width/5 + 225,backgroundImage.height/3.5 + 88);
 
+
+
 }
 // 0: "Longitude (x)"
 // 1: "Latitude (y)"
@@ -269,3 +273,5 @@ function displayWeatherData(){
 // 29: "Spd of Max Gust (km/h)"
 // 30: "Spd of Max Gust Flag"
 5,6,7,9,11,  19,21,25,29;
+
+//global warming 0.18 per decade 
