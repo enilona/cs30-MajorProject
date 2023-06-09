@@ -38,24 +38,9 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  //count the columns
-  // print(table1.getRowCount() + " total rows in table");
-  // print(table1.getColumnCount() + " total columns in table");
-
-  //print(table1.getColumn("Max Temp (°C)"));
-  // //cycle through the table
-  // for (let r = 0; r < table1.getRowCount(); r++) {
-  //   for (let c = 0; c < table1.getColumnCount(); c++){
-  //     print(table1.getString(r, c));
-  //   }
-  // }
   getDayInput();
   getListofMax();
-  // getMin();
-  // getAverage(127,"max");
-  // getHighest();
-  // getFileDate();
-  //table2 = displayWeatherData();
+
 }
 
 function draw(){
@@ -70,9 +55,8 @@ function draw(){
   //   console.log(mouseX,mouseY);
 
   // }
-  displayWeatherData();
+  displayPastWeatherData();
 }
-
 
 function getFileDate(year,day){
   let temporaryList = [];
@@ -110,7 +94,6 @@ function getHighest(){
     }
   }
   return highest;
-  //return list;
 }
 function getAverage(day, maxOrmin){
   let average = 0;
@@ -132,11 +115,15 @@ function getAverage(day, maxOrmin){
 }
 function getPartialAverage(day){
   let average = 0;
-  let list = ge
+  let list = Number(getListofMax());
   for (let i = 0; i < 10; i ++){
-    average += Number(list[day][i]);
+    let rando = Math.floor(random(1,filesList.length/2));
+    average += list[day][Number(rando)];
   }
+  average = average/10;
+  return average;
 }
+
 function getListofMax(){
   maxTemp = [];
   for (let i = 0; i < 366; i++){
@@ -164,8 +151,16 @@ function getMin(){
   return minTemp;
 }
 
-function predictFuture(){
-
+function predictFutureWeatherData(){
+  let temp = getPartialAverage();
+  let currentdate = 2023;
+  if (dateInput[0] > 2022 && dateInput[1] > 159){
+    let diff = dateInput[0] - currentdate;
+    if (diff.length > 1){
+      temp += 0.08*diff[0];
+    }
+  }
+  return temp;
 }
 
 function getDayInput(){
@@ -199,7 +194,7 @@ function loadWeatherInputs(){
 function goButton(){
   button = createButton("Go!");
   button.position(100, 100);
-  button.mousePressed(displayWeatherData);
+  button.mousePressed(displayPastWeatherData);
 }
 function checkempty(value){
   if(value === ""){
@@ -210,7 +205,7 @@ function checkempty(value){
   }
 }
 
-function displayWeatherData(){
+function displayPastWeatherData(){
   clear();
   background(220);
   image(backgroundImage, 225,88,backgroundImage.width,backgroundImage.height);
@@ -238,9 +233,9 @@ function displayWeatherData(){
   textSize(42);
   text(checkempty(dateInput[2] + " " + dayweather.getString(dateInput[1],7)),backgroundImage.width/5 + 225,backgroundImage.height/3.5 + 88);
 
-
-
 }
+
+
 // 0: "Longitude (x)"
 // 1: "Latitude (y)"
 // 2: "Station Name"
