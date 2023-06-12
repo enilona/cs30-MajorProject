@@ -114,14 +114,25 @@ function getAverage(day, maxOrmin){
   return average;
 }
 function getPartialAverage(day){
-  let average = 0;
-  let list = Number(getListofMax());
+  let tempList = [];
+  let maxaverage = 0;
+  let maxlist = getListofMax();
   for (let i = 0; i < 10; i ++){
     let rando = Math.floor(random(1,filesList.length/2));
-    average += list[day][Number(rando)];
+    maxaverage += Number(maxlist[day][rando]);
   }
-  average = average/10;
-  return average;
+
+  let minaverage = 0;
+  let minlist = getListofMin();
+  for (let i = 0; i < 10; i ++){
+    let rando = Math.floor(random(1,filesList.length/2));
+    minaverage += Number(minlist[day][rando]);
+  }
+  maxaverage = maxaverage/10;
+  minaverage = minaverage/10;
+  tempList.push(maxaverage);
+  tempList.push(minaverage);
+  return tempList;
 }
 
 function getListofMax(){
@@ -135,6 +146,18 @@ function getListofMax(){
     maxTemp.push(temporaryList);
   }
   return maxTemp;
+}
+function getListofMin(){
+  minTemp = [];
+  for (let i = 0; i < 366; i++){
+    let temporaryList = [];
+    for (let j = 0; j < filesList.length; j++) {
+      let aTemp = filesList[j][1].getColumn("Min Temp (°C)");
+      temporaryList.push(aTemp[i]);
+    }
+    minTemp.push(temporaryList);
+  }
+  return minTemp;
 }
 
 function getMin(){
@@ -151,13 +174,14 @@ function getMin(){
   return minTemp;
 }
 
-function predictFutureWeatherData(){
-  let temp = getPartialAverage();
+function predictFutureWeatherData(day){
+  let temp = getPartialAverage(day);
   let currentdate = 2023;
   if (dateInput[0] > 2022 && dateInput[1] > 159){
     let diff = dateInput[0] - currentdate;
     if (diff.length > 1){
-      temp += 0.08*diff[0];
+      temp[0] += 0.08*diff[0];
+      temp[1] += 0.08*diff[0];
     }
   }
   return temp;
@@ -210,28 +234,34 @@ function displayPastWeatherData(){
   background(220);
   image(backgroundImage, 225,88,backgroundImage.width,backgroundImage.height);
   dayweather = loadWeatherInputs();
-  //dayweather.getString(dateInput[1],1);
-  //max temp
-  textSize(42);
-  textFont("Cursive");
-  text(checkempty(dayweather.getString(dateInput[1],9))+"°C",backgroundImage.width/1.2 + 225,backgroundImage.height/4.7+88);
-  //min temp
-  text(checkempty(dayweather.getString(dateInput[1],11))+"°C",backgroundImage.width/1.2 + 225,backgroundImage.height/3.3+88);
-  textSize(22);
-  //total rain
-  text(checkempty(dayweather.getString(dateInput[1],19))+" mm",backgroundImage.width/1.7 + 225,backgroundImage.height/6.8 + 88);
-  //Spd of Max Gust (km/h)
-  text(checkempty(dayweather.getString(dateInput[1],29))+" km/h",backgroundImage.width/1.7 + 225,backgroundImage.height/4.7 + 88);
-  //total snow
-  text(checkempty(dayweather.getString(dateInput[1],21))+" cm",backgroundImage.width/1.7 + 225,backgroundImage.height/3.5 + 88);
-  //snow on ground
-  text(checkempty(dayweather.getString(dateInput[1],25))+" cm",backgroundImage.width/1.7 + 225,backgroundImage.height/2.8 + 88);
-  //year
-  textSize(70);
-  text(checkempty(dayweather.getString(dateInput[1],5)),backgroundImage.width/5 + 225,backgroundImage.height/5.2 + 88);
-  //month and day
-  textSize(42);
-  text(checkempty(dateInput[2] + " " + dayweather.getString(dateInput[1],7)),backgroundImage.width/5 + 225,backgroundImage.height/3.5 + 88);
+  if (dateInput[0] > 2022 && dateInput[1] > 159){
+    predictFutureWeatherData(dateInput[1]);
+  }
+  else{
+    textSize(42);
+    textFont("Cursive");
+    text(checkempty(dayweather.getString(dateInput[1],9))+"°C",backgroundImage.width/1.2 + 225,backgroundImage.height/4.7+88);
+    //min temp
+    text(checkempty(dayweather.getString(dateInput[1],11))+"°C",backgroundImage.width/1.2 + 225,backgroundImage.height/3.3+88);
+    textSize(22);
+    //total rain
+    text(checkempty(dayweather.getString(dateInput[1],19))+" mm",backgroundImage.width/1.7 + 225,backgroundImage.height/6.8 + 88);
+    //Spd of Max Gust (km/h)
+    text(checkempty(dayweather.getString(dateInput[1],29))+" km/h",backgroundImage.width/1.7 + 225,backgroundImage.height/4.7 + 88);
+    //total snow
+    text(checkempty(dayweather.getString(dateInput[1],21))+" cm",backgroundImage.width/1.7 + 225,backgroundImage.height/3.5 + 88);
+    //snow on ground
+    text(checkempty(dayweather.getString(dateInput[1],25))+" cm",backgroundImage.width/1.7 + 225,backgroundImage.height/2.8 + 88);
+    //year
+    textSize(70);
+    text(checkempty(dayweather.getString(dateInput[1],5)),backgroundImage.width/5 + 225,backgroundImage.height/5.2 + 88);
+    //month and day
+    textSize(42);
+    text(checkempty(dateInput[2] + " " + dayweather.getString(dateInput[1],7)),backgroundImage.width/5 + 225,backgroundImage.height/3.5 + 88);
+  }
+}
+ 
+function displayFutureWeatherData(){
 
 }
 
