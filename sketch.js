@@ -8,7 +8,7 @@
 
 
 
-let table,table1, dayweather;
+let table,table1, dayweather, data = [];
 let yeartable, row, cellSize = 50, ROWS = 8, COLS = 2;
 let backgroundImage;
 let maxTemp = [[]];
@@ -48,14 +48,11 @@ function draw(){
   image(backgroundImage, 225,88,backgroundImage.width,backgroundImage.height);
   circle(width/2,height/2,4);
   circle(backgroundImage.width/1.22 + 225,backgroundImage.height/5+88,4);
-  //visualizeData();
-  //displayYear();
   goButton();
-  // if(mouseIsPressed){
-  //   console.log(mouseX,mouseY);
-
+  mousePressed();
+  // if (dateInput[0] > 0){
+  //   displayWeatherdata();
   // }
-  displayPastWeatherData();
 }
 
 function getFileDate(year,day){
@@ -121,7 +118,6 @@ function getPartialAverage(day){
     let rando = Math.floor(random(1,filesList.length/2));
     maxaverage += Number(maxlist[day][rando]);
   }
-
   let minaverage = 0;
   let minlist = getListofMin();
   for (let i = 0; i < 10; i ++){
@@ -174,18 +170,6 @@ function getMin(){
   return minTemp;
 }
 
-function predictFutureWeatherData(day){
-  let temp = getPartialAverage(day);
-  let currentdate = 2023;
-  if (dateInput[0] > 2022 && dateInput[1] > 159){
-    let diff = dateInput[0] - currentdate;
-    if (diff.length > 1){
-      temp[0] += 0.08*diff[0];
-      temp[1] += 0.08*diff[0];
-    }
-  }
-  return temp;
-}
 
 function getDayInput(){
   // Handle date changes
@@ -215,10 +199,23 @@ function loadWeatherInputs(){
     }
   }
 }
+function predictFutureWeatherData(day){
+  let temp = getPartialAverage(day);
+  let currentdate = 2023;
+  let diff = dateInput[0] - currentdate;
+  if (diff.length > 1){
+    temp[0] += 0.08*diff[0];
+    temp[1] += 0.08*diff[0];
+  }
+  return temp;
+}
 function goButton(){
   button = createButton("Go!");
   button.position(100, 100);
-  button.mousePressed(displayPastWeatherData);
+  button.mousePressed();
+}
+function mousePressed(){
+  displayWeatherdata();
 }
 function checkempty(value){
   if(value === ""){
@@ -229,17 +226,22 @@ function checkempty(value){
   }
 }
 
-function displayPastWeatherData(){
+function displayWeatherdata(){
   clear();
   background(220);
   image(backgroundImage, 225,88,backgroundImage.width,backgroundImage.height);
-  dayweather = loadWeatherInputs();
   if (dateInput[0] > 2022 && dateInput[1] > 159){
-    predictFutureWeatherData(dateInput[1]);
-  }
-  else{
+    data = predictFutureWeatherData(dateInput[1]);
     textSize(42);
     textFont("Cursive");
+    //max temp
+    text(dateInput[1] + "°C",backgroundImage.width/1.2 + 225,backgroundImage.height/4.7+88);
+  }
+  else if (dateInput[0] <= 2022 && dateInput[1] < 159){
+    dayweather = loadWeatherInputs();
+    textSize(42);
+    textFont("Cursive");
+    //max temp
     text(checkempty(dayweather.getString(dateInput[1],9))+"°C",backgroundImage.width/1.2 + 225,backgroundImage.height/4.7+88);
     //min temp
     text(checkempty(dayweather.getString(dateInput[1],11))+"°C",backgroundImage.width/1.2 + 225,backgroundImage.height/3.3+88);
@@ -261,9 +263,6 @@ function displayPastWeatherData(){
   }
 }
  
-function displayFutureWeatherData(){
-
-}
 
 
 // 0: "Longitude (x)"
