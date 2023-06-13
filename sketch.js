@@ -189,7 +189,6 @@ function getDayInput(){
 
 function loadWeatherInputs(){
   let s = dateInput[0];
-  //let j = `./saskatoon${s}.csv`;
   for (let i = 0; i < filesList.length; i++ ){
     if (filesList[i][0]=== dateInput[0]){
       yeartable = filesList[i][1];
@@ -228,7 +227,7 @@ function checkempty(value){
 
 function displayWeatherdata(){
   clear();
-  background(220);
+  background(237,239,239,255);
   image(backgroundImage, 225,88,backgroundImage.width,backgroundImage.height);
   if (dateInput[0] > 2022){
     data = predictFutureWeatherData(dateInput[1]);
