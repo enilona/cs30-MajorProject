@@ -15,7 +15,7 @@ let maxTemp = [[]];
 let minTemp=[[]];
 let filesList = [];
 let list;
-let theColor, multiplyer;
+let multiplyer;
 let button,r;
 let dateInput = [];
 const dayOfYear = date => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
@@ -49,10 +49,9 @@ function draw(){
   circle(width/2,height/2,4);
   circle(backgroundImage.width/1.22 + 225,backgroundImage.height/5+88,4);
   goButton();
-  mousePressed();
-  // if (dateInput[0] > 0){
-  //   displayWeatherdata();
-  // }
+  displayWeatherdata();
+
+
 }
 
 function getFileDate(year,day){
@@ -207,16 +206,17 @@ function predictFutureWeatherData(day){
     temp[0] += 0.08*diff[0];
     temp[1] += 0.08*diff[0];
   }
+  data.push(temp);
+  console.log(temp);
   return temp;
 }
+
 function goButton(){
   button = createButton("Go!");
   button.position(100, 100);
-  button.mousePressed();
+  button.mousePressed(displayWeatherdata);
 }
-function mousePressed(){
-  displayWeatherdata();
-}
+
 function checkempty(value){
   if(value === ""){
     return value.replace("", "no data");
@@ -230,12 +230,12 @@ function displayWeatherdata(){
   clear();
   background(220);
   image(backgroundImage, 225,88,backgroundImage.width,backgroundImage.height);
-  if (dateInput[0] > 2022 && dateInput[1] > 159){
+  if (dateInput[0] > 2022){
     data = predictFutureWeatherData(dateInput[1]);
     textSize(42);
     textFont("Cursive");
     //max temp
-    text(dateInput[1] + "°C",backgroundImage.width/1.2 + 225,backgroundImage.height/4.7+88);
+    text(data[1] + "°C",backgroundImage.width/1.2 + 225,backgroundImage.height/4.7+88);
   }
   else if (dateInput[0] <= 2022 && dateInput[1] < 159){
     dayweather = loadWeatherInputs();
