@@ -10,7 +10,7 @@
 let fireAni;
 let table,table1, dayweather, data = [];
 let yeartable, row, cellSize = 50, ROWS = 8, COLS = 2;
-let backgroundImage;
+let backgroundImage1, backgroundImage2;
 let maxTemp = [[]], minTemp=[[]], rainfall = [[]], windspeed = [[]], snowfall = [[]], groundsnow = [[]];
 let filesList = [];
 let list;
@@ -24,7 +24,8 @@ let field = document.querySelector("#date");
 let monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 function preload() {
-  backgroundImage = loadImage("backgroundimage.png");
+  backgroundImage1 = loadImage("backgroundimage_past.png");
+  backgroundImage2 = loadImage("backgroundimage_future.png");
   //my table is comma separated value "csv"
   //and has a header specifying the columns labels
   for (let i = 1980; i <= 2023; i++){
@@ -34,7 +35,8 @@ function preload() {
     tempList.push(i, table);
     filesList.push(tempList);
   }
-  fireAni = loadAnimation('fire_spritesheet.png', { frameSize: [171, 158], frames: 11 });
+  fireAni = loadImage("fire_spritesheet.png");
+  //fireAni = loadAnimation('fire_spritesheet.png', { frameSize: [171, 158], frames: 11 });
 }
 
 function setup() {
@@ -46,15 +48,12 @@ function setup() {
 
 function draw(){
   background(220);
-  image(backgroundImage, 225,88,backgroundImage.width,backgroundImage.height);
-  circle(width/2,height/2,4);
-  circle(backgroundImage.width/1.22 + 225,backgroundImage.height/5+88,4);
+  //image(backgroundImage1, 225,88,backgroundImage1.width,backgroundImage1.height);
   //goButton();
   displayWeatherdata();
-  animation(fireAni, 100, 100);
+  //animation(fireAni, 100, 100);
 
-  scale(0.6);
-  image(fireAni.spriteSheet, 320, 80, 500, 154);
+  //image(fireAni, 320, 80);
 }
 
 function getFileDate(year,day){
@@ -304,8 +303,9 @@ function checkempty(value){
 function displayWeatherdata(){
   clear();
   background(237,239,239,255);
-  image(backgroundImage, 225,88,backgroundImage.width,backgroundImage.height);
+  image(backgroundImage2, 225,88,backgroundImage1.width,backgroundImage1.height);
   if (dateInput[0] > 2022){
+    image(backgroundImage1, 225,88,backgroundImage1.width,backgroundImage1.height);
     console.log(onoff);
     if (onoff === 0){
       data = [];
@@ -315,45 +315,46 @@ function displayWeatherdata(){
     textSize(42);
     textFont("Cursive");
     //max temp
-    text(data[0] + "°C",backgroundImage.width/1.2 + 225,backgroundImage.height/4.7+88);
+    text(data[0] + "°C",backgroundImage1.width/1.2 + 225,backgroundImage1.height/4.7+88);
     //min temp
-    text(data[1] + "°C",backgroundImage.width/1.2 + 225,backgroundImage.height/3.3+88);
+    text(data[1] + "°C",backgroundImage1.width/1.2 + 225,backgroundImage1.height/3.3+88);
     //chance of rain
     textSize(22);
-    text(data[2] + " %",backgroundImage.width/1.7 + 225,backgroundImage.height/6.8 + 88);
+    text(data[2] + " %",backgroundImage1.width/1.7 + 225,backgroundImage1.height/6.8 + 88);
     //potential wind gust
-    text(data[3]+" km/h",backgroundImage.width/1.7 + 225,backgroundImage.height/4.7 + 88);
+    text(data[3]+" km/h",backgroundImage1.width/1.7 + 225,backgroundImage1.height/4.7 + 88);
     //chance of snow
-    text(data[4]+" %",backgroundImage.width/1.7 + 225,backgroundImage.height/3.5 + 88);
+    text(data[4]+" %",backgroundImage1.width/1.7 + 225,backgroundImage1.height/3.5 + 88);
     //snow on ground
-    text(data[5]+" cm",backgroundImage.width/1.7 + 225,backgroundImage.height/2.8 + 88);
+    text(data[5]+" cm",backgroundImage1.width/1.7 + 225,backgroundImage1.height/2.8 + 88);
     //year
     textSize(70);
-    text(dateInput[0], backgroundImage.width/5 + 225,backgroundImage.height/5.2 + 88);
+    text(dateInput[0], backgroundImage1.width/5 + 225,backgroundImage1.height/5.2 + 88);
   }
   else if (dateInput[0] <= 2022 && dateInput[1] < 159){
+    image(backgroundImage1, 225,88,backgroundImage1.width,backgroundImage1.height);
     dayweather = loadWeatherInputs();
     textSize(42);
     textFont("Cursive");
     //max temp
-    text(checkempty(dayweather.getString(dateInput[1],9))+"°C",backgroundImage.width/1.2 + 225,backgroundImage.height/4.7+88);
+    text(checkempty(dayweather.getString(dateInput[1],9))+"°C",backgroundImage1.width/1.2 + 225,backgroundImage1.height/4.7+88);
     //min temp
-    text(checkempty(dayweather.getString(dateInput[1],11))+"°C",backgroundImage.width/1.2 + 225,backgroundImage.height/3.3+88);
+    text(checkempty(dayweather.getString(dateInput[1],11))+"°C",backgroundImage1.width/1.2 + 225,backgroundImage1.height/3.3+88);
     textSize(22);
     //total rain
-    text(checkempty(dayweather.getString(dateInput[1],19))+" mm",backgroundImage.width/1.7 + 225,backgroundImage.height/6.8 + 88);
+    text(checkempty(dayweather.getString(dateInput[1],19))+" mm",backgroundImage1.width/1.7 + 225,backgroundImage1.height/6.8 + 88);
     //Spd of Max Gust (km/h)
-    text(checkempty(dayweather.getString(dateInput[1],29))+" km/h",backgroundImage.width/1.7 + 225,backgroundImage.height/4.7 + 88);
+    text(checkempty(dayweather.getString(dateInput[1],29))+" km/h",backgroundImage1.width/1.7 + 225,backgroundImage1.height/4.7 + 88);
     //total snow
-    text(checkempty(dayweather.getString(dateInput[1],21))+" cm",backgroundImage.width/1.7 + 225,backgroundImage.height/3.5 + 88);
+    text(checkempty(dayweather.getString(dateInput[1],21))+" cm",backgroundImage1.width/1.7 + 225,backgroundImage1.height/3.5 + 88);
     //snow on ground
-    text(checkempty(dayweather.getString(dateInput[1],25))+" cm",backgroundImage.width/1.7 + 225,backgroundImage.height/2.8 + 88);
+    text(checkempty(dayweather.getString(dateInput[1],25))+" cm",backgroundImage1.width/1.7 + 225,backgroundImage1.height/2.8 + 88);
     //year
     textSize(70);
-    text(checkempty(dayweather.getString(dateInput[1],5)),backgroundImage.width/5 + 225,backgroundImage.height/5.2 + 88);
+    text(checkempty(dayweather.getString(dateInput[1],5)),backgroundImage1.width/5 + 225,backgroundImage1.height/5.2 + 88);
     //month and day
     textSize(42);
-    text(checkempty(dateInput[2] + " " + dayweather.getString(dateInput[1],7)),backgroundImage.width/5 + 225,backgroundImage.height/3.5 + 88);
+    text(checkempty(dateInput[2] + " " + dayweather.getString(dateInput[1],7)),backgroundImage1.width/5 + 225,backgroundImage1.height/3.5 + 88);
   }
 }
  
