@@ -11,13 +11,13 @@
 let table,table1, dayweather, data = [];
 let yeartable, row, cellSize = 50, ROWS = 8, COLS = 2;
 let backgroundImage;
-let maxTemp = [[]];
-let minTemp=[[]];
+let maxTemp = [[]], minTemp=[[]], rainfall = [[]], windspeed = [[]], snowfall = [[]], groundsnow = [[]];
 let filesList = [];
 let list;
 let multiplyer;
 let button,r;
 let dateInput = [];
+let onoff = 0;
 const dayOfYear = date => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
 let field = document.querySelector("#date");
 let monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -48,9 +48,8 @@ function draw(){
   image(backgroundImage, 225,88,backgroundImage.width,backgroundImage.height);
   circle(width/2,height/2,4);
   circle(backgroundImage.width/1.22 + 225,backgroundImage.height/5+88,4);
-  goButton();
+  //goButton();
   displayWeatherdata();
-
 
 }
 
@@ -64,20 +63,6 @@ function getFileDate(year,day){
   return temporaryList;
 }
 
-function visualizeData() {
-  let list = getListofMax();
-  let x = 10;
-  let y = 1;
-  fill("black");
-  textSize(50);
-  text(1980,width/2,100);
-  fill("red");
-  for (let i = 0; i < 367; i++){
-    circle(x,Number(list[i][y])*4+300,5);
-    x+=4;
-  }
-  return list;
-}
 function getHighest(){
   let highest = -9999999;
   let lowest = 999999;
@@ -109,26 +94,6 @@ function getAverage(day, maxOrmin){
 
   return average;
 }
-function getPartialAverage(day){
-  let tempList = [];
-  let maxaverage = 0;
-  let maxlist = getListofMax();
-  for (let i = 0; i < 10; i ++){
-    let rando = Math.floor(random(1,filesList.length/2));
-    maxaverage += Number(maxlist[day][rando]);
-  }
-  let minaverage = 0;
-  let minlist = getListofMin();
-  for (let i = 0; i < 10; i ++){
-    let rando = Math.floor(random(1,filesList.length/2));
-    minaverage += Number(minlist[day][rando]);
-  }
-  maxaverage = maxaverage/10;
-  minaverage = minaverage/10;
-  tempList.push(maxaverage);
-  tempList.push(minaverage);
-  return tempList;
-}
 
 function getListofMax(){
   maxTemp = [];
@@ -154,6 +119,108 @@ function getListofMin(){
   }
   return minTemp;
 }
+function getListofRain(){
+  rainfall = [];
+  for (let i = 0; i < 366; i++){
+    let temporaryList = [];
+    for (let j = 0; j < filesList.length; j++) {
+      let aTemp = filesList[j][1].getColumn("Total Rain (mm)");
+      temporaryList.push(aTemp[i]);
+    }
+    rainfall.push(temporaryList);
+  }
+  return rainfall;
+}
+function getListofWind(){
+  windspeed = [];
+  for (let i = 0; i < 366; i++){
+    let temporaryList = [];
+    for (let j = 0; j < filesList.length; j++) {
+      let aTemp = filesList[j][1].getColumn("Spd of Max Gust (km/h)");
+      temporaryList.push(aTemp[i]);
+    }
+    windspeed.push(temporaryList);
+  }
+  return windspeed;
+}
+function getListofSnow(){
+  rainfall = [];
+  for (let i = 0; i < 366; i++){
+    let temporaryList = [];
+    for (let j = 0; j < filesList.length; j++) {
+      let aTemp = filesList[j][1].getColumn("Total Snow (cm)");
+      temporaryList.push(aTemp[i]);
+    }
+    snowfall.push(temporaryList);
+  }
+  return snowfall;
+}
+function getGroundSnow(){
+  groundsnow = [];
+  for (let i = 0; i < 366; i++){
+    let temporaryList = [];
+    for (let j = 0; j < filesList.length; j++) {
+      let aTemp = filesList[j][1].getColumn("Snow on Grnd (cm)");
+      temporaryList.push(aTemp[i]);
+    }
+    windspeed.push(temporaryList);
+  }
+  return groundsnow;
+}
+
+function getPartialAverage(day){
+  let tempList = [];
+  let maxaverage = 0;
+  let maxlist = getListofMax();
+  for (let i = 0; i < 12; i ++){
+    let rando = Math.floor(random(1,filesList.length/2));
+    maxaverage += Number(maxlist[day][rando]);
+  }
+  let minaverage = 0;
+  let minlist = getListofMin();
+  for (let i = 0; i < 12; i ++){
+    let rando = Math.floor(random(1,filesList.length/2));
+    minaverage += Number(minlist[day][rando]);
+  }
+  let rainchance = 0;
+  let rainlist = getListofRain();
+  for (let i = 0; i < 11; i ++){
+    let rando = Math.floor(random(1,filesList.length/2));
+    if (Number(rainlist[day][rando]) !== 0){
+      rainchance+= 10;
+    }
+  }
+  let windgust = 0;
+  let windspeed = getListofRain();
+  for (let i = 0; i < 11; i ++){
+    let rando = Math.floor(random(1,filesList.length/2));
+    windgust += Number(windspeed[day][rando]);
+  }
+  let snowchance = 0;
+  let snowlist = getListofSnow();
+  for (let i = 0; i < 11; i ++){
+    let rando = Math.floor(random(1,filesList.length/2));
+    if (Number(snowlist[day][rando]) !== 0){
+      snowchance+= 10;
+    }
+  }
+  let snowdepth = 0;
+  let snowdata = getListofSnow();
+  for (let i = 0; i < 11; i ++){
+    let rando = Math.floor(random(1,filesList.length/2));
+    snowdepth += Number(snowdata[day][rando]);
+  }
+  maxaverage = maxaverage/10;
+  minaverage = minaverage/10;
+  tempList.push(maxaverage);
+  tempList.push(minaverage);
+  tempList.push(rainchance);
+  tempList.push(windgust);
+  tempList.push(snowchance);
+  tempList.push(snowdepth);
+  return tempList;
+}
+
 
 function getMin(){
   for (let i = 0; i < 366; i++){
@@ -182,7 +249,7 @@ function getDayInput(){
     dateInput.push(theDate.getFullYear());
     dateInput.push(dayOfYear(theDate));
     dateInput.push(monthList[month(theDate)]);
-    //table1 = loadTable(`./saskatoon${2006}.csv`, "csv", "header");
+    onoff = 0;
     return dateInput;
   });
 }
@@ -202,18 +269,23 @@ function predictFutureWeatherData(day){
   let currentdate = 2023;
   let diff = dateInput[0] - currentdate;
   if (diff.length > 1){
-    temp[0] += 0.08*diff[0];
-    temp[1] += 0.08*diff[0];
+    temp[0] += 0.1*diff[0];
+    temp[1] += 0.1*diff[0];
   }
-  data.push(temp);
-  console.log(temp);
-  return temp;
+  data.push(temp[0]);
+  data.push(temp[1]);
+  data.push(temp[2]);
+  data.push(temp[3]);
+  data.push(temp[4]);
+  data.push(temp[5]);
+  return data;
 }
 
 function goButton(){
   button = createButton("Go!");
   button.position(100, 100);
   button.mousePressed(displayWeatherdata);
+  button.mousePressed(onoff = 0);
 }
 
 function checkempty(value){
@@ -230,11 +302,30 @@ function displayWeatherdata(){
   background(237,239,239,255);
   image(backgroundImage, 225,88,backgroundImage.width,backgroundImage.height);
   if (dateInput[0] > 2022){
-    data = predictFutureWeatherData(dateInput[1]);
+    console.log(onoff);
+    if (onoff === 0){
+      data = [];
+      data = predictFutureWeatherData(dateInput[1]);
+      onoff = 1;
+    }
     textSize(42);
     textFont("Cursive");
     //max temp
-    text(data[1] + "°C",backgroundImage.width/1.2 + 225,backgroundImage.height/4.7+88);
+    text(data[0] + "°C",backgroundImage.width/1.2 + 225,backgroundImage.height/4.7+88);
+    //min temp
+    text(data[1] + "°C",backgroundImage.width/1.2 + 225,backgroundImage.height/3.3+88);
+    //chance of rain
+    textSize(22);
+    text(data[2] + " %",backgroundImage.width/1.7 + 225,backgroundImage.height/6.8 + 88);
+    //potential wind gust
+    text(data[3]+" km/h",backgroundImage.width/1.7 + 225,backgroundImage.height/4.7 + 88);
+    //chance of snow
+    text(data[4]+" %",backgroundImage.width/1.7 + 225,backgroundImage.height/3.5 + 88);
+    //snow on ground
+    text(data[5]+" cm",backgroundImage.width/1.7 + 225,backgroundImage.height/2.8 + 88);
+    //year
+    textSize(70);
+    text(dateInput[0], backgroundImage.width/5 + 225,backgroundImage.height/5.2 + 88);
   }
   else if (dateInput[0] <= 2022 && dateInput[1] < 159){
     dayweather = loadWeatherInputs();
