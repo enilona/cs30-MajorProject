@@ -7,7 +7,7 @@
 
 
 
-
+let fireAni;
 let table,table1, dayweather, data = [];
 let yeartable, row, cellSize = 50, ROWS = 8, COLS = 2;
 let backgroundImage;
@@ -18,6 +18,7 @@ let multiplyer;
 let button,r;
 let dateInput = [];
 let onoff = 0;
+let sunx = 100;
 const dayOfYear = date => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
 let field = document.querySelector("#date");
 let monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -33,7 +34,7 @@ function preload() {
     tempList.push(i, table);
     filesList.push(tempList);
   }
-  table1 = loadTable("saskatoon1980.csv", "csv", "header");
+  fireAni = loadAnimation('fire_spritesheet.png', { frameSize: [171, 158], frames: 11 });
 }
 
 function setup() {
@@ -50,7 +51,10 @@ function draw(){
   circle(backgroundImage.width/1.22 + 225,backgroundImage.height/5+88,4);
   //goButton();
   displayWeatherdata();
+  animation(fireAni, 100, 100);
 
+  scale(0.6);
+  image(fireAni.spriteSheet, 320, 80, 500, 154);
 }
 
 function getFileDate(year,day){
@@ -353,7 +357,6 @@ function displayWeatherdata(){
   }
 }
  
-
 
 // 0: "Longitude (x)"
 // 1: "Latitude (y)"
