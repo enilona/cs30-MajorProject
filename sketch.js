@@ -311,6 +311,7 @@ function displayWeatherdata(){
   imageMode(CENTER);
   background(222,236,240,255);
   image(backgroundImage1, width/2 ,height/2, backgroundImage1.width/2, backgroundImage1.height/2);
+  
   if (dateInput[0] > 2022){
     image(backgroundImage2, width/2 ,height/2, backgroundImage1.width/2, backgroundImage1.height/2);
     if (onoff === 0){
