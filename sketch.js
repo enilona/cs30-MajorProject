@@ -248,13 +248,14 @@ function getDayInput(){
     dateInput = [];
     // Get the date
     let theDate = new Date(field.value);
-    console.log(theDate.getFullYear());
-    console.log(dayOfYear(theDate));
+    //console.log(theDate.getFullYear());
+    //console.log(dayOfYear(theDate));
     console.log(theDate.getMonth());
     dateInput.push(theDate.getFullYear());
     dateInput.push(dayOfYear(theDate));
-    dateInput.push(monthList[month[theDate]]);
+    dateInput.push(monthList[theDate.getMonth()]);
     console.log(theDate);
+    dateInput.push(theDate);
     onoff = 0;
     return dateInput;
   });
@@ -265,7 +266,6 @@ function loadWeatherInputs(){
   for (let i = 0; i < filesList.length; i++ ){
     if (filesList[i][0]=== dateInput[0]){
       yeartable = filesList[i][1];
-      print(yeartable);
       return yeartable;
     }
   }
@@ -313,7 +313,6 @@ function displayWeatherdata(){
   image(backgroundImage1, width/2 ,height/2, backgroundImage1.width/2, backgroundImage1.height/2);
   if (dateInput[0] > 2022){
     image(backgroundImage2, width/2 ,height/2, backgroundImage1.width/2, backgroundImage1.height/2);
-    console.log(onoff);
     if (onoff === 0){
       data = [];
       data = predictFutureWeatherData(dateInput[1]);
@@ -339,10 +338,10 @@ function displayWeatherdata(){
     text(dateInput[0],centerx-350,centery-180);
     //month
     textSize(50);
-    text(dateInput[2],centerx-350,centery-110)
+    text(dateInput[2],centerx-350,centery-110);
   }
   else if (dateInput[0] <= 2022 && dateInput[1] < 159){
-    imageMode(windowWidth/2,windowHeight/2);
+    imageMode(CENTER);
     image(backgroundImage1, width/2 ,height/2, backgroundImage1.width/2, backgroundImage1.height/2);
     dayweather = loadWeatherInputs();
     textSize(42);
@@ -369,6 +368,9 @@ function displayWeatherdata(){
   }
 }
  
+
+
+
 
 // 0: "Longitude (x)"
 // 1: "Latitude (y)"
