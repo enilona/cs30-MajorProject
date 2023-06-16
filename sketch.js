@@ -40,7 +40,6 @@ function preload() {
 }
 
 function setup() {
-  translate(windowWidth/2,windowHeight/2);
   createCanvas(windowWidth, windowHeight);
   getDayInput();
   getListofMax();
@@ -48,14 +47,14 @@ function setup() {
 }
 
 function draw(){
-  background(220);
+  background(232,237,238,255);
   //image(backgroundImage1, 225,88,backgroundImage1.width,backgroundImage1.height);
   //goButton();
   displayWeatherdata();
   //animation(fireAni, 100, 100);
 
   //image(fireAni, 320, 80);
-  //console.log(backgroundImage1.height/mouseY);
+  //console.log(mouseY);
 }
 
 function getFileDate(year,day){
@@ -251,9 +250,11 @@ function getDayInput(){
     let theDate = new Date(field.value);
     console.log(theDate.getFullYear());
     console.log(dayOfYear(theDate));
+    console.log(theDate.getMonth());
     dateInput.push(theDate.getFullYear());
     dateInput.push(dayOfYear(theDate));
-    dateInput.push(monthList[month(theDate)]);
+    dateInput.push(monthList[month[theDate]]);
+    console.log(theDate);
     onoff = 0;
     return dateInput;
   });
@@ -304,11 +305,14 @@ function checkempty(value){
 
 function displayWeatherdata(){
   clear();
+  let centerx = width/2;
+  let centery = height/2;
+  //translate(windowWidth/2,windowHeight/2);
   imageMode(CENTER);
-  background(237,239,239,255);
-  image(backgroundImage2, width - backgroundImage1.width/2 ,height - backgroundImage1.height/2,backgroundImage1.width/2,backgroundImage1.height/2);
+  background(222,236,240,255);
+  image(backgroundImage1, width/2 ,height/2, backgroundImage1.width/2, backgroundImage1.height/2);
   if (dateInput[0] > 2022){
-    image(backgroundImage1, 225,88,backgroundImage1.width,backgroundImage1.height);
+    image(backgroundImage2, width/2 ,height/2, backgroundImage1.width/2, backgroundImage1.height/2);
     console.log(onoff);
     if (onoff === 0){
       data = [];
@@ -318,47 +322,50 @@ function displayWeatherdata(){
     textSize(42);
     textFont("Cursive");
     //max temp
-    text(data[0] + "°C",backgroundImage1.width/1.3 + 225,backgroundImage1.height/1.53);
+    text(data[0] + "°C",centerx+300 , centery);
     //min temp
-    text(data[1] + "°C",backgroundImage1.width/1.3 + 225,backgroundImage1.height/1.14);
+    text(data[1] + "°C",centerx+300 ,centery+125);
     //chance of rain
-    textSize(22);
-    text(data[2] + " %",backgroundImage1.width/2.8 + 225,backgroundImage1.height/1.75);
+    textSize(30);
+    text(data[2] + " %",centerx-100 ,centery-40);
     //potential wind gust
-    text(data[3]+" km/h",backgroundImage1.width/2.8 + 225,backgroundImage1.height/1.42);
+    text(data[3]+" km/h",centerx-100 ,centery+30);
     //chance of snow
-    text(data[4]+" %",backgroundImage1.width/2.8 + 225,backgroundImage1.height/1.18);
+    text(data[4]+" %",centerx-100 ,centery+110);
     //snow on ground
-    text(data[5]+" cm",backgroundImage1.width/2.8 + 225,backgroundImage1.height/1.2+88);
+    text(data[5]+" cm",centerx-100 ,centery+180);
     //year
     textSize(70);
-    text(dateInput[0], backgroundImage1.width/5 + 225,backgroundImage1.height/5.2 + 88);
+    text(dateInput[0],centerx-350,centery-180);
+    //month
+    textSize(50);
+    text(dateInput[2],centerx-350,centery-110)
   }
   else if (dateInput[0] <= 2022 && dateInput[1] < 159){
     imageMode(windowWidth/2,windowHeight/2);
-    image(backgroundImage1, width/2 + image.width/2,height/2+image.height/2,backgroundImage1.width/2,backgroundImage1.height/2);
+    image(backgroundImage1, width/2 ,height/2, backgroundImage1.width/2, backgroundImage1.height/2);
     dayweather = loadWeatherInputs();
     textSize(42);
     textFont("Cursive");
     //max temp
-    text(checkempty(dayweather.getString(dateInput[1],9))+"°C",backgroundImage1.width/1.3 + 225,backgroundImage1.height/1.53);
+    text(checkempty(dayweather.getString(dateInput[1],9))+"°C",centerx+300 , centery);
     //min temp
-    text(checkempty(dayweather.getString(dateInput[1],11))+"°C",backgroundImage1.width/1.3 + 225,backgroundImage1.height/1.14);
-    textSize(22);
+    text(checkempty(dayweather.getString(dateInput[1],11))+"°C",centerx+300 ,centery+125);
+    textSize(30);
     //total rain
-    text(checkempty(dayweather.getString(dateInput[1],19))+" mm",backgroundImage1.width/2.8 + 225,backgroundImage1.height/1.75);
+    text(checkempty(dayweather.getString(dateInput[1],19))+" mm",centerx-100 ,centery-40);
     //Spd of Max Gust (km/h)
-    text(checkempty(dayweather.getString(dateInput[1],29))+" km/h",backgroundImage1.width/2.8 + 225,backgroundImage1.height/1.42);
+    text(checkempty(dayweather.getString(dateInput[1],29))+" km/h",centerx-100 ,centery+30);
     //total snow
-    text(checkempty(dayweather.getString(dateInput[1],21))+" cm",backgroundImage1.width/2.8 + 225,backgroundImage1.height/1.18);
+    text(checkempty(dayweather.getString(dateInput[1],21))+" cm",centerx-100 ,centery+110);
     //snow on ground
-    text(checkempty(dayweather.getString(dateInput[1],25))+" cm",backgroundImage1.width/2.8 + 225,backgroundImage1.height/1.2+88);
+    text(checkempty(dayweather.getString(dateInput[1],25))+" cm",centerx-100 ,centery+180);
     //year
-    textSize(70);
-    text(checkempty(dayweather.getString(dateInput[1],5)),backgroundImage1.width/5 + 225,backgroundImage1.height/5.2 + 88);
+    textSize(80);
+    text(checkempty(dayweather.getString(dateInput[1],5)),centerx-350,centery-180);
     //month and day
-    textSize(42);
-    text(checkempty(dateInput[2] + " " + dayweather.getString(dateInput[1],7)),backgroundImage1.width/5 + 225,backgroundImage1.height/3.5 + 88);
+    textSize(50);
+    text(checkempty(dateInput[2] + " " + dayweather.getString(dateInput[1],7)),centerx-350,centery-110);
   }
 }
  
