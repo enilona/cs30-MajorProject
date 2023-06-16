@@ -35,11 +35,12 @@ function preload() {
     tempList.push(i, table);
     filesList.push(tempList);
   }
-  fireAni = loadImage("fire_spritesheet.png");
+  //fireAni = loadImage("fire_spritesheet.png");
   //fireAni = loadAnimation('fire_spritesheet.png', { frameSize: [171, 158], frames: 11 });
 }
 
 function setup() {
+  translate(windowWidth/2,windowHeight/2);
   createCanvas(windowWidth, windowHeight);
   getDayInput();
   getListofMax();
@@ -54,6 +55,7 @@ function draw(){
   //animation(fireAni, 100, 100);
 
   //image(fireAni, 320, 80);
+  //console.log(backgroundImage1.height/mouseY);
 }
 
 function getFileDate(year,day){
@@ -302,8 +304,9 @@ function checkempty(value){
 
 function displayWeatherdata(){
   clear();
+  imageMode(CENTER);
   background(237,239,239,255);
-  image(backgroundImage2, 225,88,backgroundImage1.width,backgroundImage1.height);
+  image(backgroundImage2, width - backgroundImage1.width/2 ,height - backgroundImage1.height/2,backgroundImage1.width/2,backgroundImage1.height/2);
   if (dateInput[0] > 2022){
     image(backgroundImage1, 225,88,backgroundImage1.width,backgroundImage1.height);
     console.log(onoff);
@@ -315,40 +318,41 @@ function displayWeatherdata(){
     textSize(42);
     textFont("Cursive");
     //max temp
-    text(data[0] + "°C",backgroundImage1.width/1.2 + 225,backgroundImage1.height/4.7+88);
+    text(data[0] + "°C",backgroundImage1.width/1.3 + 225,backgroundImage1.height/1.53);
     //min temp
-    text(data[1] + "°C",backgroundImage1.width/1.2 + 225,backgroundImage1.height/3.3+88);
+    text(data[1] + "°C",backgroundImage1.width/1.3 + 225,backgroundImage1.height/1.14);
     //chance of rain
     textSize(22);
-    text(data[2] + " %",backgroundImage1.width/1.7 + 225,backgroundImage1.height/6.8 + 88);
+    text(data[2] + " %",backgroundImage1.width/2.8 + 225,backgroundImage1.height/1.75);
     //potential wind gust
-    text(data[3]+" km/h",backgroundImage1.width/1.7 + 225,backgroundImage1.height/4.7 + 88);
+    text(data[3]+" km/h",backgroundImage1.width/2.8 + 225,backgroundImage1.height/1.42);
     //chance of snow
-    text(data[4]+" %",backgroundImage1.width/1.7 + 225,backgroundImage1.height/3.5 + 88);
+    text(data[4]+" %",backgroundImage1.width/2.8 + 225,backgroundImage1.height/1.18);
     //snow on ground
-    text(data[5]+" cm",backgroundImage1.width/1.7 + 225,backgroundImage1.height/2.8 + 88);
+    text(data[5]+" cm",backgroundImage1.width/2.8 + 225,backgroundImage1.height/1.2+88);
     //year
     textSize(70);
     text(dateInput[0], backgroundImage1.width/5 + 225,backgroundImage1.height/5.2 + 88);
   }
   else if (dateInput[0] <= 2022 && dateInput[1] < 159){
-    image(backgroundImage1, 225,88,backgroundImage1.width,backgroundImage1.height);
+    imageMode(windowWidth/2,windowHeight/2);
+    image(backgroundImage1, width/2 + image.width/2,height/2+image.height/2,backgroundImage1.width/2,backgroundImage1.height/2);
     dayweather = loadWeatherInputs();
     textSize(42);
     textFont("Cursive");
     //max temp
-    text(checkempty(dayweather.getString(dateInput[1],9))+"°C",backgroundImage1.width/1.2 + 225,backgroundImage1.height/4.7+88);
+    text(checkempty(dayweather.getString(dateInput[1],9))+"°C",backgroundImage1.width/1.3 + 225,backgroundImage1.height/1.53);
     //min temp
-    text(checkempty(dayweather.getString(dateInput[1],11))+"°C",backgroundImage1.width/1.2 + 225,backgroundImage1.height/3.3+88);
+    text(checkempty(dayweather.getString(dateInput[1],11))+"°C",backgroundImage1.width/1.3 + 225,backgroundImage1.height/1.14);
     textSize(22);
     //total rain
-    text(checkempty(dayweather.getString(dateInput[1],19))+" mm",backgroundImage1.width/1.7 + 225,backgroundImage1.height/6.8 + 88);
+    text(checkempty(dayweather.getString(dateInput[1],19))+" mm",backgroundImage1.width/2.8 + 225,backgroundImage1.height/1.75);
     //Spd of Max Gust (km/h)
-    text(checkempty(dayweather.getString(dateInput[1],29))+" km/h",backgroundImage1.width/1.7 + 225,backgroundImage1.height/4.7 + 88);
+    text(checkempty(dayweather.getString(dateInput[1],29))+" km/h",backgroundImage1.width/2.8 + 225,backgroundImage1.height/1.42);
     //total snow
-    text(checkempty(dayweather.getString(dateInput[1],21))+" cm",backgroundImage1.width/1.7 + 225,backgroundImage1.height/3.5 + 88);
+    text(checkempty(dayweather.getString(dateInput[1],21))+" cm",backgroundImage1.width/2.8 + 225,backgroundImage1.height/1.18);
     //snow on ground
-    text(checkempty(dayweather.getString(dateInput[1],25))+" cm",backgroundImage1.width/1.7 + 225,backgroundImage1.height/2.8 + 88);
+    text(checkempty(dayweather.getString(dateInput[1],25))+" cm",backgroundImage1.width/2.8 + 225,backgroundImage1.height/1.2+88);
     //year
     textSize(70);
     text(checkempty(dayweather.getString(dateInput[1],5)),backgroundImage1.width/5 + 225,backgroundImage1.height/5.2 + 88);
