@@ -7,9 +7,12 @@ Another idea that I just had that I think I would have enjoyed a lot more would 
 
 
 ## Did you complete everything in your "needs to have" list?
-In the end, completing everything in my needs to have list turned out to be the easiest part of my project.
+In the end, completing everything in my needs to have list turned out to be the easiest part of my project. I thought that extracting the files and writing the code for the data would be the most difficult but it turns out that I was wrong. I had the most trouble with the parts that were not on my needs to have list, but were still necessary in order to make the program work. I will talk about the most difficult parts in the next section.
 
 ## What was the hardest part of the project?
+The hardest part of my project was using javascript. I was always very frustrated when certain built in functions should have worked bu didn't and I think that I spent about 70% of my coding time in trying to fix problems. Another hard part of my project was boredom with my topic. There was a point in my coding journey when I hadn't started working on the visual parts of my program yet and all of my time was spent creating functions and finding data. This part was difficult because I couldn't see any of the progress I was making and I wasn't sure where my code was heading. It felt like I had hit a wall and it wasn't until I spent almost an entire weekend with coding that I finally felt like I knew what I was doing and I could finally make progress that I was happy with
 
 ## What did you learn?
-
+Though I may have a few things that I would have done differently during my project, I am still glad that I did it because I learned a lot along the way. One of the first things that I learned was about how important it is to keep my code organized, always think before doing and always make sure that I know what I am trying to accomplish. When I didn't do any of these things I soon found myself in a sea of jibberish and I didn't even know what I was trying to do. 
+I also learned not to worry too much if I feel that I cannot follow my original plan that I set. Even though I stuck to my to do list and general plan I still reaized that the original picture in my mind of what the final product was either unrealistic or did not match the rest of the coding that I was trying to do. I had to learn to be flexible while still following an end goal.
+Overall I think that I learned a lot from this project, not just from a programming point of view, but also about skills and methods that I can use in other parts of my life.
