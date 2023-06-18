@@ -341,7 +341,7 @@ function displayWeatherdata(){
     textSize(50);
     text(dateInput[2],centerx-350,centery-110);
   }
-  else if (dateInput[0] <= 2022 && dateInput[1] < 159){
+  else if (dateInput[0] <= 2022){
     imageMode(CENTER);
     image(backgroundImage1, width/2 ,height/2, backgroundImage1.width/2, backgroundImage1.height/2);
     dayweather = loadWeatherInputs();
