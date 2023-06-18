@@ -1,33 +1,25 @@
-// Project Title
+// CS30 Capstone Coding Project
 // Eszter Nemeth
-// Date
-//https://www.dataquest.io/blog/basic-statistics-in-python-probability/
-//download moment.js
+// 2023/06/19
 
 
-
-
-let fireAni;
 let table,table1, dayweather, data = [];
 let yeartable, row, cellSize = 50, ROWS = 8, COLS = 2;
 let backgroundImage1, backgroundImage2;
 let maxTemp = [[]], minTemp=[[]], rainfall = [[]], windspeed = [[]], snowfall = [[]], groundsnow = [[]];
 let filesList = [];
 let list;
-let multiplyer;
-let button,r;
 let dateInput = [];
 let onoff = 0;
-let sunx = 100;
 const dayOfYear = date => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
 let field = document.querySelector("#date");
 let monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 function preload() {
+  //load the backround image
   backgroundImage1 = loadImage("backgroundimage_past.png");
   backgroundImage2 = loadImage("backgroundimage_future.png");
-  //my table is comma separated value "csv"
-  //and has a header specifying the columns labels
+  // load all of the files into a list
   for (let i = 1980; i <= 2023; i++){
     let tempList = [];
     table = `saskatoon${i}.csv`;
@@ -35,70 +27,20 @@ function preload() {
     tempList.push(i, table);
     filesList.push(tempList);
   }
-  //fireAni = loadImage("fire_spritesheet.png");
-  //fireAni = loadAnimation('fire_spritesheet.png', { frameSize: [171, 158], frames: 11 });
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   getDayInput();
-  getListofMax();
-
 }
 
 function draw(){
   background(232,237,238,255);
-  //image(backgroundImage1, 225,88,backgroundImage1.width,backgroundImage1.height);
-  //goButton();
   displayWeatherdata();
-  //animation(fireAni, 100, 100);
 
-  //image(fireAni, 320, 80);
-  //console.log(mouseY);
 }
 
-function getFileDate(year,day){
-  let temporaryList = [];
-  for (let i = 0; i < filesList.length; i++){
-    r = filesList[i].getColumn(5);
-    let element = r[1];
-    temporaryList.push(element);
-  }
-  return temporaryList;
-}
-
-function getHighest(){
-  let highest = -9999999;
-  let lowest = 999999;
-  list = getListofMax();
-  for (let i = 1; i < list.length; i++){
-    for (let j = 1; j < filesList.length; j++){
-      if (Number(list[i][j]) > highest){
-        highest = list[i][j];
-      }
-    }
-  }
-  return highest;
-}
-function getAverage(day, maxOrmin){
-  let average = 0;
-  if (day === "today"){
-    day = 127;
-  }
-  if (maxOrmin === "max"){
-    list = getListofMax();
-  }
-  if (maxOrmin === "min"){
-    list = getMin();
-  }
-  for (let i = 0; i < filesList.length; i++){
-    average += Number(list[day][i]);
-  }
-  average = average/filesList.length;
-
-  return average;
-}
-
+//the next few function all work in similar ways to get a list of the indicated catgory
 function getListofMax(){
   maxTemp = [];
   for (let i = 0; i < 366; i++){
@@ -172,6 +114,7 @@ function getGroundSnow(){
   return groundsnow;
 }
 
+// this function calculates the weather data for future predictions
 function getPartialAverage(day){
   let tempList = [];
   let maxaverage = 0;
@@ -216,6 +159,7 @@ function getPartialAverage(day){
   }
   maxaverage = maxaverage/10;
   minaverage = minaverage/10;
+  //pushes all of the calculated data into a temporary list
   tempList.push(maxaverage);
   tempList.push(minaverage);
   tempList.push(rainchance);
@@ -225,22 +169,7 @@ function getPartialAverage(day){
   return tempList;
 }
 
-
-function getMin(){
-  for (let i = 0; i < 366; i++){
-    let temporaryList = [];
-    for (let j = 0; j < filesList.length; j++) {
-      let aTemp = filesList[j][1].getColumn("Min Temp (°C)");
-      temporaryList.push(aTemp[i]);
-    }
-    minTemp.push(temporaryList);
-  }
-  
-  text(minTemp , width/2, height/2);
-  return minTemp;
-}
-
-
+// this allows for user to choose the date
 function getDayInput(){
   // Handle date changes
   // eslint-disable-next-line no-undef
@@ -248,8 +177,6 @@ function getDayInput(){
     dateInput = [];
     // Get the date
     let theDate = new Date(field.value);
-    //console.log(theDate.getFullYear());
-    //console.log(dayOfYear(theDate));
     console.log(theDate.getMonth());
     dateInput.push(theDate.getFullYear());
     dateInput.push(dayOfYear(theDate));
@@ -257,12 +184,12 @@ function getDayInput(){
     console.log(theDate);
     dateInput.push(theDate);
     onoff = 0;
+    //pushes the date info into the dateInput list
     return dateInput;
   });
 }
-
+//loads a table of the weather inputs
 function loadWeatherInputs(){
-  let s = dateInput[0];
   for (let i = 0; i < filesList.length; i++ ){
     if (filesList[i][0]=== dateInput[0]){
       yeartable = filesList[i][1];
@@ -270,6 +197,7 @@ function loadWeatherInputs(){
     }
   }
 }
+//this function adresses global warming
 function predictFutureWeatherData(day){
   let temp = getPartialAverage(day);
   let currentdate = 2023;
@@ -287,13 +215,7 @@ function predictFutureWeatherData(day){
   return data;
 }
 
-function goButton(){
-  button = createButton("Go!");
-  button.position(100, 100);
-  button.mousePressed(displayWeatherdata);
-  button.mousePressed(onoff = 0);
-}
-
+//checks to see if there is missing data in the csv files
 function checkempty(value){
   if(value === ""){
     return value.replace("", "no data");
@@ -304,6 +226,7 @@ function checkempty(value){
 }
 
 function displayWeatherdata(){
+  //clears the previous screen
   clear();
   let centerx = width/2;
   let centery = height/2;
@@ -329,7 +252,7 @@ function displayWeatherdata(){
     textSize(30);
     text(data[2] + " %",centerx-100 ,centery-40);
     //potential wind gust
-    text(data[3]+" km/h",centerx-100 ,centery+30);
+    text(data[3],centerx-100 ,centery+30);
     //chance of snow
     text(data[4]+" %",centerx-100 ,centery+110);
     //snow on ground
@@ -372,6 +295,64 @@ function displayWeatherdata(){
 
 
 
+function getFileDate(year,day){
+  let temporaryList = [];
+  let r;
+  for (let i = 0; i < filesList.length; i++){
+    r = filesList[i].getColumn(5);
+    let element = r[1];
+    temporaryList.push(element);
+  }
+  return temporaryList;
+}
+
+//gets the highest temperature recorded. This is never displayed
+function getHighest(){
+  let highest = -9999999;
+  list = getListofMax();
+  for (let i = 1; i < list.length; i++){
+    for (let j = 1; j < filesList.length; j++){
+      if (Number(list[i][j]) > highest){
+        highest = list[i][j];
+      }
+    }
+  }
+  return highest;
+}
+//this is not used anymore either but it used to get the average temp for a specific day
+function getAverage(day, maxOrmin){
+  let average = 0;
+  if (day === "today"){
+    day = 127;
+  }
+  if (maxOrmin === "max"){
+    list = getListofMax();
+  }
+  if (maxOrmin === "min"){
+    list = getMin();
+  }
+  for (let i = 0; i < filesList.length; i++){
+    average += Number(list[day][i]);
+  }
+  average = average/filesList.length;
+
+  return average;
+}
+
+
+function getMin(){
+  for (let i = 0; i < 366; i++){
+    let temporaryList = [];
+    for (let j = 0; j < filesList.length; j++) {
+      let aTemp = filesList[j][1].getColumn("Min Temp (°C)");
+      temporaryList.push(aTemp[i]);
+    }
+    minTemp.push(temporaryList);
+  }
+  
+  text(minTemp , width/2, height/2);
+  return minTemp;
+}
 
 // 0: "Longitude (x)"
 // 1: "Latitude (y)"
