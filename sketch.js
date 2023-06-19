@@ -2,6 +2,11 @@
 // Eszter Nemeth
 // 2023/06/19
 
+// This is my capstone coding project for CS30. It is a weather data displayer that takes in data from environemnt 
+// Canada's website and uses it to either display the past data or to predict future data. 
+// Please note that the future weather predictions and are not accurate and not meant to be taken seriously. For
+// a more accurate weather forecast please look to a reliable weather app or website.
+
 
 let table,table1, dayweather, data = [];
 let yeartable, row, cellSize = 50, ROWS = 8, COLS = 2;
@@ -36,20 +41,21 @@ function setup() {
 }
 
 function draw(){
-  background(232,237,238,255);
   displayWeatherdata();
-
 }
 
-//the next few function all work in similar ways to get a list of the indicated catgory
+//the next few function all work in similar ways to get a list of the indicated catgory from the data set
 function getListofMax(){
   maxTemp = [];
+  //cycle through the columns and rows of the data file
   for (let i = 0; i < 366; i++){
     let temporaryList = [];
+    //gets each max temp for each day of the year
     for (let j = 0; j < filesList.length; j++) {
       let aTemp = filesList[j][1].getColumn("Max Temp (°C)");
       temporaryList.push(aTemp[i]);
     }
+    // puts all the data into a list
     maxTemp.push(temporaryList);
   }
   return maxTemp;
@@ -211,7 +217,7 @@ function predictFutureWeatherData(day){
   data.push(temp[0]);
   data.push(temp[1]);
   data.push(temp[2]);
-  data.push(Math.round(2,temp[3]));
+  data.push(Math.floor(temp[3]));
   data.push(temp[4]);
   data.push(temp[5]);
   return data;
@@ -230,22 +236,25 @@ function checkempty(value){
 function displayWeatherdata(){
   //clears the previous screen
   clear();
+  //makes it easier to align the images
   let centerx = width/2;
   let centery = height/2;
-  //translate(windowWidth/2,windowHeight/2);
   imageMode(CENTER);
-  background(220,220,220,255);
+
+  background(240,230,220,255);
   image(backgroundImage1, width/2 ,height/2, backgroundImage1.width/1.5, backgroundImage1.height/1.5);
   image(flag, centerx+500,centery-250, flag.width/6, flag.height/6);
   
-  if (dateInput[0] > 2022){
+  if (dateInput[0] > 2023 || dateInput[0] === 2023 && dateInput[1] > 168){
     image(backgroundImage2, width/2 ,height/2, backgroundImage1.width/1.5, backgroundImage1.height/1.5);
     image(flag, centerx+500,centery-250, flag.width/6, flag.height/6);
+    // prevents the code from calclating new future data while the date hasn't changed
     if (onoff === 0){
       data = [];
       data = predictFutureWeatherData(dateInput[1]);
       onoff = 1;
     }
+    //display future data
     textSize(60);
     textFont("Cursive");
     //max temp
@@ -256,7 +265,7 @@ function displayWeatherdata(){
     textSize(50);
     text(data[2] + " %",centerx-100 ,centery-50);
     //potential wind gust
-    text(data[3],centerx-100 ,centery+45);
+    text(data[3] + " km/h",centerx-100 ,centery+45);
     //chance of snow
     text(data[4]+" %",centerx-100 ,centery+150);
     //snow on ground
@@ -266,11 +275,13 @@ function displayWeatherdata(){
     text(dateInput[3],centerx-570,centery-220);
 
   }
-  else if (dateInput[0] <= 2022){
+  else if (dateInput[0] < 2023 || dateInput[0] === 2023 && dateInput[1] <=168){
     imageMode(CENTER);
     image(backgroundImage1, width/2 ,height/2, backgroundImage1.width/1.5, backgroundImage1.height/1.5);
     image(flag, centerx+500,centery-250, flag.width/6, flag.height/6);
     dayweather = loadWeatherInputs();
+
+    //display past data
     textSize(60);
     textFont("Cursive");
     //max temp
@@ -292,9 +303,7 @@ function displayWeatherdata(){
   }
 }
  
-
-
-
+//the functions below this point are not used and are only here for my own reference.
 function getFileDate(year,day){
   let temporaryList = [];
   let r;
