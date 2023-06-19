@@ -6,3 +6,11 @@ html, body {
 canvas {
   display: block;
 }
+
+label {
+  font-size:x-large;
+}
+
+input {
+  font-size:x-large;
+}

@@ -211,7 +211,7 @@ function predictFutureWeatherData(day){
   data.push(temp[0]);
   data.push(temp[1]);
   data.push(temp[2]);
-  data.push(temp[3]);
+  data.push(Math.round(2,temp[3]));
   data.push(temp[4]);
   data.push(temp[5]);
   return data;
@@ -235,60 +235,60 @@ function displayWeatherdata(){
   //translate(windowWidth/2,windowHeight/2);
   imageMode(CENTER);
   background(220,220,220,255);
-  image(backgroundImage1, width/2 ,height/2, backgroundImage1.width/2, backgroundImage1.height/2);
-  image(flag, centerx+350,centery-200, flag.width/6, flag.height/6);
+  image(backgroundImage1, width/2 ,height/2, backgroundImage1.width/1.5, backgroundImage1.height/1.5);
+  image(flag, centerx+500,centery-250, flag.width/6, flag.height/6);
   
   if (dateInput[0] > 2022){
-    image(backgroundImage2, width/2 ,height/2, backgroundImage1.width/2, backgroundImage1.height/2);
-    image(flag, centerx+350,centery-200, flag.width/6, flag.height/6);
+    image(backgroundImage2, width/2 ,height/2, backgroundImage1.width/1.5, backgroundImage1.height/1.5);
+    image(flag, centerx+500,centery-250, flag.width/6, flag.height/6);
     if (onoff === 0){
       data = [];
       data = predictFutureWeatherData(dateInput[1]);
       onoff = 1;
     }
-    textSize(42);
+    textSize(60);
     textFont("Cursive");
     //max temp
-    text(data[0] + "°C",centerx+300 , centery);
+    text(data[0] + "°C",centerx+320 , centery+10);
     //min temp
-    text(data[1] + "°C",centerx+300 ,centery+125);
+    text(data[1] + "°C",centerx+320 ,centery+160);
     //chance of rain
-    textSize(30);
-    text(data[2] + " %",centerx-100 ,centery-40);
+    textSize(50);
+    text(data[2] + " %",centerx-100 ,centery-50);
     //potential wind gust
-    text(data[3],centerx-100 ,centery+30);
+    text(data[3],centerx-100 ,centery+45);
     //chance of snow
-    text(data[4]+" %",centerx-100 ,centery+110);
+    text(data[4]+" %",centerx-100 ,centery+150);
     //snow on ground
-    text(data[5]+" cm",centerx-100 ,centery+180);
+    text(data[5]+" cm",centerx-100 ,centery+250);
     //year and date
-    textSize(55);
-    text(dateInput[3],centerx-450,centery-170);
+    textSize(70);
+    text(dateInput[3],centerx-570,centery-220);
 
   }
   else if (dateInput[0] <= 2022){
     imageMode(CENTER);
-    image(backgroundImage1, width/2 ,height/2, backgroundImage1.width/2, backgroundImage1.height/2);
-    image(flag, centerx+350,centery-200, flag.width/6, flag.height/6);
+    image(backgroundImage1, width/2 ,height/2, backgroundImage1.width/1.5, backgroundImage1.height/1.5);
+    image(flag, centerx+500,centery-250, flag.width/6, flag.height/6);
     dayweather = loadWeatherInputs();
-    textSize(42);
+    textSize(60);
     textFont("Cursive");
     //max temp
-    text(checkempty(dayweather.getString(dateInput[1],9))+"°C",centerx+300 , centery);
+    text(checkempty(dayweather.getString(dateInput[1],9))+"°C",centerx+300 , centery + 10);
     //min temp
-    text(checkempty(dayweather.getString(dateInput[1],11))+"°C",centerx+300 ,centery+125);
-    textSize(30);
+    text(checkempty(dayweather.getString(dateInput[1],11))+"°C",centerx+320 ,centery+160);
+    textSize(50);
     //total rain
-    text(checkempty(dayweather.getString(dateInput[1],19))+" mm",centerx-100 ,centery-40);
+    text(checkempty(dayweather.getString(dateInput[1],19))+" mm",centerx-100 ,centery-50);
     //Spd of Max Gust (km/h)
-    text(checkempty(dayweather.getString(dateInput[1],29))+" km/h",centerx-100 ,centery+30);
+    text(checkempty(dayweather.getString(dateInput[1],29))+" km/h",centerx-100 ,centery+45);
     //total snow
-    text(checkempty(dayweather.getString(dateInput[1],21))+" cm",centerx-100 ,centery+110);
+    text(checkempty(dayweather.getString(dateInput[1],21))+" cm",centerx-100 ,centery+150);
     //snow on ground
-    text(checkempty(dayweather.getString(dateInput[1],25))+" cm",centerx-100 ,centery+180);
+    text(checkempty(dayweather.getString(dateInput[1],25))+" cm",centerx-100 ,centery+250);
     //year
     textSize(55);
-    text(dateInput[3],centerx-450,centery-170);
+    text(dateInput[3],centerx-570,centery-220);
   }
 }
  
