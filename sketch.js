@@ -5,7 +5,7 @@
 
 let table,table1, dayweather, data = [];
 let yeartable, row, cellSize = 50, ROWS = 8, COLS = 2;
-let backgroundImage1, backgroundImage2;
+let backgroundImage1, backgroundImage2, flag;
 let maxTemp = [[]], minTemp=[[]], rainfall = [[]], windspeed = [[]], snowfall = [[]], groundsnow = [[]];
 let filesList = [];
 let list;
@@ -19,6 +19,7 @@ function preload() {
   //load the backround image
   backgroundImage1 = loadImage("backgroundimage_past.png");
   backgroundImage2 = loadImage("backgroundimage_future.png");
+  flag = loadImage("Flag-Saskatchewan.webp");
   // load all of the files into a list
   for (let i = 1980; i <= 2023; i++){
     let tempList = [];
@@ -178,11 +179,12 @@ function getDayInput(){
     // Get the date
     let theDate = new Date(field.value);
     console.log(theDate.getMonth());
+    console.log(theDate.toDateString());
     dateInput.push(theDate.getFullYear());
     dateInput.push(dayOfYear(theDate));
     dateInput.push(monthList[theDate.getMonth()]);
     console.log(theDate);
-    dateInput.push(theDate);
+    dateInput.push(theDate.toDateString());
     onoff = 0;
     //pushes the date info into the dateInput list
     return dateInput;
@@ -232,11 +234,13 @@ function displayWeatherdata(){
   let centery = height/2;
   //translate(windowWidth/2,windowHeight/2);
   imageMode(CENTER);
-  background(222,236,240,255);
+  background(220,220,220,255);
   image(backgroundImage1, width/2 ,height/2, backgroundImage1.width/2, backgroundImage1.height/2);
+  image(flag, centerx+350,centery-200, flag.width/6, flag.height/6);
   
   if (dateInput[0] > 2022){
     image(backgroundImage2, width/2 ,height/2, backgroundImage1.width/2, backgroundImage1.height/2);
+    image(flag, centerx+350,centery-200, flag.width/6, flag.height/6);
     if (onoff === 0){
       data = [];
       data = predictFutureWeatherData(dateInput[1]);
@@ -257,16 +261,15 @@ function displayWeatherdata(){
     text(data[4]+" %",centerx-100 ,centery+110);
     //snow on ground
     text(data[5]+" cm",centerx-100 ,centery+180);
-    //year
-    textSize(70);
-    text(dateInput[0],centerx-350,centery-180);
-    //month
-    textSize(50);
-    text(dateInput[2],centerx-350,centery-110);
+    //year and date
+    textSize(55);
+    text(dateInput[3],centerx-450,centery-170);
+
   }
   else if (dateInput[0] <= 2022){
     imageMode(CENTER);
     image(backgroundImage1, width/2 ,height/2, backgroundImage1.width/2, backgroundImage1.height/2);
+    image(flag, centerx+350,centery-200, flag.width/6, flag.height/6);
     dayweather = loadWeatherInputs();
     textSize(42);
     textFont("Cursive");
@@ -284,11 +287,8 @@ function displayWeatherdata(){
     //snow on ground
     text(checkempty(dayweather.getString(dateInput[1],25))+" cm",centerx-100 ,centery+180);
     //year
-    textSize(80);
-    text(checkempty(dayweather.getString(dateInput[1],5)),centerx-350,centery-180);
-    //month and day
-    textSize(50);
-    text(checkempty(dateInput[2] + " " + dayweather.getString(dateInput[1],7)),centerx-350,centery-110);
+    textSize(55);
+    text(dateInput[3],centerx-450,centery-170);
   }
 }
  
